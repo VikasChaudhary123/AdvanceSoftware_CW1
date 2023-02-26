@@ -1,40 +1,41 @@
-enum crossingStatus{
-        CROSSED, NOTCROSSED
-}
-enum vehicleDirection {
-    STRAIGHT,
-    RIGHT,
-    LEFT
-}
-class Vehicle {
+public class Vehicle {
+	private String segment;
     private String plateId;
-    private String segment;
     private String type ;
     private int crossingTime;
     private vehicleDirection direction;
-    private crossingStatus status;
     private int length;
     private int emission;
-
-    public Vehicle(String segment, String plateId, String type, int crossingTime,
-                   vehicleDirection direction,
-                   int length, int emission, crossingStatus status) {
-        this.plateId = plateId;
-        this.segment = segment;
+    private Status crossingStatus;    
+    
+    private enum vehicleDirection {
+	    STRAIGHT,
+	    RIGHT,
+	    LEFT
+	}
+    
+    private enum Status{
+        CROSSED, 
+        NOTCROSSED
+    }
+   
+    public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, String length, String emission, String crossingStatus) {
+    	this.segment = segment;
+    	this.plateId = plateId;
         this.type = type;
-        this.crossingTime = crossingTime;
-        this.direction = direction;
-        this.status = status;
-        this.length = length;
-        this.emission = emission;
+        this.crossingTime = Integer.parseInt(crossingTime);
+        this.direction = vehicleDirection.valueOf(direction);
+        this.length = Integer.parseInt(crossingStatus);
+        this.emission = Integer.parseInt(emission);
+        this.crossingStatus = Status.valueOf(crossingStatus);
     }
-
-    public String getPlateId() {
-        return plateId;
-    }
-
+    
     public String getSegment() {
         return segment;
+    }
+    
+    public String getPlateId() {
+        return plateId;
     }
 
     public String getType() {
@@ -48,16 +49,16 @@ class Vehicle {
     public vehicleDirection getDirection() {
         return direction;
     }
-
-    public crossingStatus getStatus() {
-        return status;
-    }
-
+    
     public int getLength() {
         return length;
     }
 
     public int getEmission() {
         return emission;
+    }
+
+    public Status getStatus() {
+        return crossingStatus;
     }
 }
