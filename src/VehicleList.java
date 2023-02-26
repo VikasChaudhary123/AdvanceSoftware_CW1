@@ -115,5 +115,16 @@ public class VehicleList {
 	        }
 	        return allEntries.toString();
 	    }
+	    
+	    //Get totalEmissions Method
+	    public float StatsCo2() 
+	    {
+	    	float totalEmissions = 0;
+	    	for (Vehicle vehicle : vehicles) 
+	    	{
+	    		totalEmissions += vehicle.getEmission();
+	    	}
+	    	return totalEmissions;
+	    }
 
 }
