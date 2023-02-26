@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 public class GUIClass extends JFrame implements ActionListener{
-	private String Columns;
-	private String[][] data;
-	private JFrame frame;
 	private JTable jt;
 	private JTable jt1;
 	private JTable jtn;
@@ -17,47 +14,30 @@ public class GUIClass extends JFrame implements ActionListener{
 	private JButton cancelbutton;
 	private JPanel panel;
 	private JTextField CO2 ;
-public GUIClass() {
+	private VehicleList vehicleList;
+public GUIClass(VehicleList vehicleList) {
+	   this.vehicleList=vehicleList;
 	
-	Object vehicledata[][]={ 
-			{ "L98214", "Car" , Integer.valueOf(3) ,"Left" ,Integer.valueOf(5),Integer.valueOf(5) ,"waiting" ,"S2"},    
-            { "K37201" ,"Truck",Integer.valueOf(12), "Straight", Integer.valueOf(11), Integer.valueOf(12), "crossed", "S1"},    
-            { "S83257", "Bus", Integer.valueOf(7) ,"Left" ,Integer.valueOf(14) ,Integer.valueOf(10) ,"crossed ","S3"},
-            { "J94430", "Bus" ,Integer.valueOf(9) ,"Right" ,Integer.valueOf(15) ,Integer.valueOf(10) ,"waiting ","S4"},
-            { "D23892" ,"Truck", Integer.valueOf(11), "Left" ,Integer.valueOf(13) ,Integer.valueOf(12),"waiting", "S1"}
-            };    
-String vehiclecolumn[]={"Vehicle" ,"Type" ,"Crossing time", "Direction", "Length" ,"Emission", "Status", "Segment"};  
+String vehiclecolumn[]={"Segment","Vehicle" ,"Type" ,"Crossing time", "Direction", "Length" ,"Emission", "Status" };  
+String phasecolumn[]={"Phase" ,"Duration" };
 Object addvehicledata[][]={ 
-		{ " ", " " , Integer.valueOf(0) ," " ,Integer.valueOf(0),Integer.valueOf(0) ," " ," "},    
+		{ " "," ", " " , Integer.valueOf(0) ," " ,Integer.valueOf(0),Integer.valueOf(0) ," " },    
       
         };    
-
-Object phasedata[][]={ 
-		{"P1" , Integer.valueOf(30)},   
-		{"P2" , Integer.valueOf(35)},
-		{"P3", Integer.valueOf(40)},
-		{"P4" , Integer.valueOf(23)},
-		{"P5" , Integer.valueOf(53)},
-		{"P6", Integer.valueOf(15)},
-		{"P7" , Integer.valueOf(25)},
-		{"P8" , Integer.valueOf(45)}
-       };   
-String phasecolumn[]={"Phase" ,"Duration" };
-
 Object segmentsummary[][]={ 
 		{ "S1" , Integer.valueOf(3)  ,Integer.valueOf(5),Integer.valueOf(5) ,Integer.valueOf(15)},    
         { "S2" ,Integer.valueOf(12), Integer.valueOf(11), Integer.valueOf(12),Integer.valueOf(25)},    
         };    
 String segmentcolumn[]={"Segment","Vehicles waiting" ,"Waiting Length" ,"Cross time", "Wait time"};  
-DefaultTableModel vehiclemodel = new DefaultTableModel(vehicledata,vehiclecolumn) {
+DefaultTableModel vehiclemodel = new DefaultTableModel(vehicleList.listDetails(),vehiclecolumn) {
     @Override
     public Class getColumnClass(int column) {
         switch (column) {
-            case 2:
-                return Integer.class;
-            case 4:
+            case 3:
                 return Integer.class;
             case 5:
+                return Integer.class;
+            case 6:
                 return Integer.class;
             default:
                 return String.class;
@@ -68,11 +48,11 @@ DefaultTableModel addvehiclemodel = new DefaultTableModel(addvehicledata,vehicle
     @Override
     public Class getColumnClass(int column) {
         switch (column) {
-            case 2:
-                return Integer.class;
-            case 4:
+            case 3:
                 return Integer.class;
             case 5:
+                return Integer.class;
+            case 6:
                 return Integer.class;
             default:
                 return String.class;
@@ -90,7 +70,7 @@ DefaultTableModel segmentmodel = new DefaultTableModel(segmentsummary,segmentcol
         }
     }
 };
-DefaultTableModel modelphase = new DefaultTableModel(phasedata,phasecolumn) {
+DefaultTableModel modelphase = new DefaultTableModel(vehicleList.listPhases(),phasecolumn) {
     @Override
     public Class getColumnClass(int column) {
         switch (column) {
@@ -112,8 +92,7 @@ DefaultTableModel modelphase = new DefaultTableModel(phasedata,phasecolumn) {
 	
 	jtp= new JTable(addvehiclemodel);
     jtp.setBounds(30,40,80,80); 
-    jtp.setAutoCreateRowSorter(true);
-	JScrollPane spp=new JScrollPane(jtp);   
+    JScrollPane spp=new JScrollPane(jtp);   
     add(spp,BorderLayout.CENTER);
 	
 	jtn= new JTable(segmentmodel);
@@ -175,17 +154,20 @@ public void actionPerformed(ActionEvent e) {
 	      }
 	      if(e.getSource()==addbutton) {
 	    	  System.out.println("Add button clicked");
+	    	  DefaultTableModel model = (DefaultTableModel) jt.getModel();
+	    	  model.addRow(new Object[]{jtp.getValueAt(0,0), jtp.getValueAt(0,1), jtp.getValueAt(0,2), jtp.getValueAt(0,3), jtp.getValueAt(0,4), jtp.getValueAt(0,5), jtp.getValueAt(0,6), jtp.getValueAt(0,7)
+	    		    	});
+	    	 
+	    	  Vehicle v = new Vehicle(jtp.getValueAt(0,0).toString(), jtp.getValueAt(0,1).toString(), jtp.getValueAt(0,2).toString(),jtp.getValueAt(0,3).toString(),jtp.getValueAt(0,4).toString(), 
+	    			  jtp.getValueAt(0,5).toString(), jtp.getValueAt(0,6).toString(), jtp.getValueAt(0,7).toString());
+	    	  vehicleList.AddNewVehicle(v);
+
 	      }
 	      if(e.getSource()==cancelbutton) {
 	    	  System.out.println("Cancel button clicked");
 	    	  for(int i = 0; i < 8; i++) {
-	    		  if(i==2 || i==4 || i==5)
-	    		  {
-	    			  jtp.setValueAt(0, 0, i); 
-	    		  }
-	    		  else {
-	    			  jtp.setValueAt(" ", 0, i);
-	    		  }
+	    		jtp.setValueAt("", 0, i);
+	    		  
 	    	  }
 	    	  
 	      }
