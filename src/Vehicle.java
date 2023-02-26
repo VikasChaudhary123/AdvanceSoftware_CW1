@@ -1,5 +1,6 @@
 public class Vehicle {
 	
+	private Phase phase ;
 	private String segment;
     private String plateId;
     private String type ;
@@ -51,6 +52,28 @@ public class Vehicle {
         this.length = Integer.parseInt(length);
         this.emission = Integer.parseInt(emission);
         this.crossingStatus = Status.StatusLookup(crossingStatus);
+        
+//        this.phase = 
+    }
+    
+//    private Phase CalculatePhase(String segment, VehicleDirection d)
+//    {
+////    	switch (segment) {
+//    		case "S1":
+//    			
+//    			break ;
+//    	}
+//    }
+    
+    /**
+     * @return A  string containing all details.
+     */
+    public String toString()
+    {
+//        return String.format("%-5s", id ) + String.format("%-20s", name) +
+//                 String.format("%5d", hoursWorked );
+    	
+    	return segment+" " +plateId+" " + type+" " + crossingTime+" "+direction+" " + length+" "+emission+" "+crossingStatus ;
     }
     
     public String getSegment() {

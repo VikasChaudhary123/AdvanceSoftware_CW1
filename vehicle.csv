@@ -1,0 +1,3 @@
+Segment,PlateNumber,Type,CrossingTime in sec,Direction,Length in meters,Emission,CrossingStatus
+S1,BD51SMR,Car,20,left,40,5,waiting
+S2,NU72REG,Truck,40,right,80,10,waiting
