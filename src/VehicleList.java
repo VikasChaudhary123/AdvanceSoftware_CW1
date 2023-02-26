@@ -129,7 +129,7 @@ public class VehicleList {
 	    }
 
 	    //Get SegmentSummary Method
-	    public Map<String, Object> SegmentSummary(Vehicle vehicle) 
+	    public Map<String, Object>  SegmentSummary() 
 	    {  
 	        int[] counts = new int[4];
 	        int[] lengths = new int[4];
@@ -182,6 +182,7 @@ public class VehicleList {
 	            dataMap.put(keyPrefix + "Number of Waiting Vehicle", counts[i]);
 	            dataMap.put(keyPrefix + "Length of Waiting Vehicle", lengths[i]);
 	            dataMap.put(keyPrefix + "Avg Crossing Time", avgTime);
+	           
 	        }
 	        return dataMap;
 	    }
