@@ -178,6 +178,16 @@ public void actionPerformed(ActionEvent e) {
 	      }
 	      if(e.getSource()==cancelbutton) {
 	    	  System.out.println("Cancel button clicked");
+	    	  for(int i = 0; i < 8; i++) {
+	    		  if(i==2 || i==4 || i==5)
+	    		  {
+	    			  jtp.setValueAt(0, 0, i); 
+	    		  }
+	    		  else {
+	    			  jtp.setValueAt(" ", 0, i);
+	    		  }
+	    	  }
+	    	  
 	      }
 	    	  
 			
