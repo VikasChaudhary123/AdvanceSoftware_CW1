@@ -1,33 +1,56 @@
 public class Vehicle {
+	
 	private String segment;
     private String plateId;
     private String type ;
     private int crossingTime;
-    private vehicleDirection direction;
+    private VehicleDirection direction;
     private int length;
     private int emission;
     private Status crossingStatus;    
     
-    private enum vehicleDirection {
-	    STRAIGHT,
-	    RIGHT,
-	    LEFT
-	}
+    private enum VehicleDirection {
+    	STRAIGHT,
+    	RIGHT,
+    	LEFT;
+    	
+    	//string to Enum ignore case
+    	//https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+	    public static VehicleDirection directionLookup(String direction) {
+	    	for (VehicleDirection d : VehicleDirection.values()) {
+	    		if (d.name().equalsIgnoreCase(direction)) {
+	    			return d;
+				}
+			}
+	    	return null;
+		}
+    }
     
     private enum Status{
-        CROSSED, 
-        NOTCROSSED
-    }
+    	CROSSED,
+    	WAITING;
+    	
+    	//string to Enum ignore case
+    	//https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+    	public static Status StatusLookup(String status) {
+    		for (Status s : Status.values()) {
+    			if (s.name().equalsIgnoreCase(status)) {
+    				return s;
+				}
+			}
+    		return null;
+		}
+	}
    
     public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, String length, String emission, String crossingStatus) {
     	this.segment = segment;
     	this.plateId = plateId;
         this.type = type;
         this.crossingTime = Integer.parseInt(crossingTime);
-        this.direction = vehicleDirection.valueOf(direction);
-        this.length = Integer.parseInt(crossingStatus);
+        this.direction = VehicleDirection.directionLookup(direction);
+        this.length = Integer.parseInt(length);
         this.emission = Integer.parseInt(emission);
-        this.crossingStatus = Status.valueOf(crossingStatus);
+        this.crossingStatus = Status.StatusLookup(crossingStatus);
     }
     
     public String getSegment() {
@@ -46,7 +69,7 @@ public class Vehicle {
         return crossingTime;
     }
 
-    public vehicleDirection getDirection() {
+    public VehicleDirection getDirection() {
         return direction;
     }
     
