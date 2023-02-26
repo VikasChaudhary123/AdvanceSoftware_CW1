@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Vehicle {
 	
 	private Phase phase ;
@@ -27,7 +30,7 @@ public class Vehicle {
 		}
     }
     
-    private enum Status{
+    public enum Status{
     	CROSSED,
     	WAITING;
     	
@@ -43,27 +46,32 @@ public class Vehicle {
 		}
 	}
    
-    public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, String length, String emission, String crossingStatus) {
+    public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, 
+    		String length, String emission, String crossingStatus) throws CarPlateNumberInvalid {
     	this.segment = segment.toUpperCase();
-    	this.plateId = plateId;
+    	
+    	// https://www.javatpoint.com/java-regex
+    	// https://gist.github.com/danielrbradley/7567269
+    	String pattern = "(^[A-Z]{2}[0-9]{2}\\s?[A-Z]{3}$)|(^[A-Z][0-9]{1,3}[A-Z]{3}$)|(^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(^[0-9]{1,4}[A-Z]{1,2}$)|(^[0-9]{1,3}[A-Z]{1,3}$)|(^[A-Z]{1,2}[0-9]{1,4}$)|(^[A-Z]{1,3}[0-9]{1,3}$)|(^[A-Z]{1,3}[0-9]{1,4}$)|(^[0-9]{3}[DX]{1}[0-9]{3}$)\r\n"
+    			+ "" ;
+    	Pattern p = Pattern.compile(pattern) ;
+    	Matcher m = p.matcher(plateId);  
+    	if (m.matches())
+    	{
+    		this.plateId = plateId;
+    	}else {
+    		throw new CarPlateNumberInvalid("Car plate number is not valid") ;
+    	}
+    	
         this.type = type;
         this.crossingTime = Integer.parseInt(crossingTime);
         this.direction = VehicleDirection.directionLookup(direction);
         this.length = Integer.parseInt(length);
         this.emission = Integer.parseInt(emission);
         this.crossingStatus = Status.StatusLookup(crossingStatus);
-        
-//        this.phase = 
+
     }
     
-//    private Phase CalculatePhase(String segment, VehicleDirection d)
-//    {
-////    	switch (segment) {
-//    		case "S1":
-//    			
-//    			break ;
-//    	}
-//    }
     
     /**
      * @return A  string containing all details.
@@ -73,7 +81,15 @@ public class Vehicle {
 //        return String.format("%-5s", id ) + String.format("%-20s", name) +
 //                 String.format("%5d", hoursWorked );
     	
-    	return segment+" " +plateId+" " + type+" " + crossingTime+" "+direction+" " + length+" "+emission+" "+crossingStatus+" "+phase;
+    	return 	String.format("%-4s",segment)+
+    			plateId+" " + 
+    			String.format("%-7s",type)+ 
+    			String.format("%-5s",crossingTime)+
+    			String.format("%-10s",direction)+
+    			String.format("%-5s",length)+
+    			String.format("%-5s",emission)+
+    			String.format("%-9s",crossingStatus)+
+    			String.format("%-10s",phase);
     }
     public void setPhase(Phase p) {
     	phase = p ; 
