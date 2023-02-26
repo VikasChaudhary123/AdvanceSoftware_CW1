@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class VehicleList {
 		
@@ -125,10 +125,11 @@ public class VehicleList {
 	    	{
 	    		totalEmissions += vehicle.getEmission();
 	    	}
-	    	return totalEmissions;
+	    	return totalEmissions/1000; //Get totalEmissions in KG
 	    }
 
-	    public String SegmentSummary(Vehicle vehicle) 
+	    //Get SegmentSummary Method
+	    public Map<String, Object> SegmentSummary(Vehicle vehicle) 
 	    {  
 	        int[] counts = new int[4];
 	        int[] lengths = new int[4];
@@ -169,10 +170,20 @@ public class VehicleList {
 	            avgTimes[i] = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
 	        }
 	        
-	        Object[] data = new Object[] {counts[0], lengths[0], counts[1], lengths[1], counts[2], lengths[2], counts[3], lengths[3], avgTimes[0], avgTimes[1], avgTimes[2], avgTimes[3]};
+	        // create a new HashMap to hold the key-value pairs
+	        Map<String, Object> dataMap = new HashMap<>();
 	        
-	        return Arrays.toString(data);
+	        // add the key-value pairs to the map
+	        String[] segments = {"S1", "S2", "S3", "S4"};
+	        
+	        for (int i = 0; i < 4; i++) {
+	            double avgTime = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
+	            String keyPrefix = segments[i] + " ";
+	            dataMap.put(keyPrefix + "Number of Waiting Vehicle", counts[i]);
+	            dataMap.put(keyPrefix + "Length of Waiting Vehicle", lengths[i]);
+	            dataMap.put(keyPrefix + "Avg Crossing Time", avgTime);
+	        }
+	        return dataMap;
 	    }
-   
-
+	   
 }
