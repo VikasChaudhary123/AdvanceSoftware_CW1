@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VehicleList {
 		
@@ -106,41 +107,14 @@ public class VehicleList {
 		}
 		
 	    //return All the vehicle details 
-	    public String[][] listDetails()
+	    public String listDetails()
 	    {
-//	    	StringBuffer allEntries = new StringBuffer();
-//	        for(Vehicle v : vehicles) {
-//	            allEntries.append(v);
-//	            allEntries.append('\n');
-//	        }
-//	        return allEntries.toString();
-	        
-	        String[][] arr = new String[vehicles.size()][8];
-	        int i = 0;
-	        for (Vehicle v : vehicles) {
-	            arr[i][0] = v.getSegment();
-	            arr[i][1] = v.getPlateId();
-	            arr[i][2] = v.getType();
-	            arr[i][3] = Integer.toString(v.getCrossingTime());
-	            arr[i][4] = v.getDirection().toString();
-	            arr[i][5] = Integer.toString(v.getLength());
-	            arr[i][6] = Integer.toString(v.getEmission());
-	            arr[i][7] = v.getStatus().toString();
-	            i++;
-	        } 
-	        return arr ;
-	    }
-	    
-	    public String[][] listPhases(){
-	    	String[][] arr = new String[phases.length][8];
-	    	for(int i=0; i<8; i++)
-	    	{
-	    		Phase p = phases[i] ;
-	    		arr[i][0] = Integer.toString(p.getPhaseNumber()) ;
-	    		arr[i][1] = Integer.toString(p.getPhaseDuration()) ;
-
-	    	}
-	    	return arr ;
+	    	StringBuffer allEntries = new StringBuffer();
+	        for(Vehicle v : vehicles) {
+	            allEntries.append(v);
+	            allEntries.append('\n');
+	        }
+	        return allEntries.toString();
 	    }
 	    
 	    //Get totalEmissions Method
@@ -153,5 +127,52 @@ public class VehicleList {
 	    	}
 	    	return totalEmissions;
 	    }
+
+	    public String SegmentSummary(Vehicle vehicle) 
+	    {  
+	        int[] counts = new int[4];
+	        int[] lengths = new int[4];
+	        int[] crossingTimes = new int[4];
+	        
+	        for (Vehicle v : vehicles) {
+	            if (v.getStatus() == Vehicle.Status.WAITING) {
+	                String segment = v.getSegment();
+	                int length = v.getLength();
+	                int crossingTime = v.getCrossingTime();
+	                
+	                switch (segment) {
+	                    case "S1":
+	                        counts[0]++;
+	                        lengths[0] += length; 
+	                        crossingTimes[0] += crossingTime;
+	                        break;
+	                    case "S2":
+	                        counts[1]++;
+	                        lengths[1] += length;
+	                        crossingTimes[1] += crossingTime;
+	                        break;
+	                    case "S3":
+	                        counts[2]++;
+	                        lengths[2] += length; 
+	                        crossingTimes[2] += crossingTime;
+	                        break;
+	                    case "S4":
+	                        counts[3]++;
+	                        lengths[3] += length; 
+	                        crossingTimes[3] += crossingTime;
+	                        break;
+	                }
+	            }
+	        }
+	        double[] avgTimes = new double[4];
+	        for (int i = 0; i < 4; i++) {
+	            avgTimes[i] = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
+	        }
+	        
+	        Object[] data = new Object[] {counts[0], lengths[0], counts[1], lengths[1], counts[2], lengths[2], counts[3], lengths[3], avgTimes[0], avgTimes[1], avgTimes[2], avgTimes[3]};
+	        
+	        return Arrays.toString(data);
+	    }
+   
 
 }
