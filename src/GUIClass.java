@@ -87,23 +87,27 @@ DefaultTableModel modelphase = new DefaultTableModel(vehicleList.listPhases(),ph
     jt= new JTable(vehiclemodel);
 	jt.setBounds(30,40,80,80); 
 	jt.setAutoCreateRowSorter(true);
+	jt.getTableHeader().setReorderingAllowed(false);
     JScrollPane sp=new JScrollPane(jt);   
 	add(sp,BorderLayout.NORTH);
 	
 	jtp= new JTable(addvehiclemodel);
     jtp.setBounds(30,40,80,80); 
+    jtp.getTableHeader().setReorderingAllowed(false);
     JScrollPane spp=new JScrollPane(jtp);   
     add(spp,BorderLayout.CENTER);
 	
 	jtn= new JTable(segmentmodel);
 	jtn.setBounds(30,40,80,80); 
     jtn.setAutoCreateRowSorter(true);
+    jtn.getTableHeader().setReorderingAllowed(false);
     JScrollPane spn=new JScrollPane(jtn);   
     add(spn,BorderLayout.EAST);
 	
 	jt1= new JTable(modelphase);
 	jt1.setBounds(60,80,40,40); 
 	jt1.setAutoCreateRowSorter(true);
+	jt1.getTableHeader().setReorderingAllowed(false);
     JScrollPane sp1=new JScrollPane(jt1);   
 	add(sp1,BorderLayout.WEST);
 	
@@ -158,9 +162,16 @@ public void actionPerformed(ActionEvent e) {
 	    	  model.addRow(new Object[]{jtp.getValueAt(0,0), jtp.getValueAt(0,1), jtp.getValueAt(0,2), jtp.getValueAt(0,3), jtp.getValueAt(0,4), jtp.getValueAt(0,5), jtp.getValueAt(0,6), jtp.getValueAt(0,7)
 	    		    	});
 	    	 
-	    	  Vehicle v = new Vehicle(jtp.getValueAt(0,0).toString(), jtp.getValueAt(0,1).toString(), jtp.getValueAt(0,2).toString(),jtp.getValueAt(0,3).toString(),jtp.getValueAt(0,4).toString(), 
-	    			  jtp.getValueAt(0,5).toString(), jtp.getValueAt(0,6).toString(), jtp.getValueAt(0,7).toString());
-	    	  vehicleList.AddNewVehicle(v);
+	    	  Vehicle v;
+			try {
+				v = new Vehicle(jtp.getValueAt(0,0).toString(), jtp.getValueAt(0,1).toString(), jtp.getValueAt(0,2).toString(),jtp.getValueAt(0,3).toString(),jtp.getValueAt(0,4).toString(), 
+						  jtp.getValueAt(0,5).toString(), jtp.getValueAt(0,6).toString(), jtp.getValueAt(0,7).toString());
+				vehicleList.AddNewVehicle(v);
+			} catch (CarPlateNumberInvalid e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	  
 
 	      }
 	      if(e.getSource()==cancelbutton) {
