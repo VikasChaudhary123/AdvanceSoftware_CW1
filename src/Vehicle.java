@@ -10,7 +10,7 @@ public class Vehicle {
     private int emission;
     private Status crossingStatus;    
     
-    private enum VehicleDirection {
+    public enum VehicleDirection {
     	STRAIGHT,
     	RIGHT,
     	LEFT;
@@ -44,7 +44,7 @@ public class Vehicle {
 	}
    
     public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, String length, String emission, String crossingStatus) {
-    	this.segment = segment;
+    	this.segment = segment.toUpperCase();
     	this.plateId = plateId;
         this.type = type;
         this.crossingTime = Integer.parseInt(crossingTime);
@@ -73,9 +73,11 @@ public class Vehicle {
 //        return String.format("%-5s", id ) + String.format("%-20s", name) +
 //                 String.format("%5d", hoursWorked );
     	
-    	return segment+" " +plateId+" " + type+" " + crossingTime+" "+direction+" " + length+" "+emission+" "+crossingStatus ;
+    	return segment+" " +plateId+" " + type+" " + crossingTime+" "+direction+" " + length+" "+emission+" "+crossingStatus+" "+phase;
     }
-    
+    public void setPhase(Phase p) {
+    	phase = p ; 
+    }
     public String getSegment() {
         return segment;
     }

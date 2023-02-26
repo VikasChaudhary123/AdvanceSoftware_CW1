@@ -15,4 +15,9 @@ public class Phase {
     public int getPhaseDuration() {
         return phaseDuration;
     }
+    
+    public String toString()
+    {	
+    	return phaseNumber+" " +phaseDuration;
+    }
 }
