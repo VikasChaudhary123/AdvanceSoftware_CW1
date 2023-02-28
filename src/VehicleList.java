@@ -186,5 +186,7 @@ public class VehicleList {
 	        }
 	        return dataMap;
 	    }
+	     public ArrayList<Vehicle> getVehicleList() {return vehicles;}
+	     public Phase[] getPhaseList() {return phases;}
 	   
 }
