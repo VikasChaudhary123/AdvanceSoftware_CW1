@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+
 public class ManagerClass {
 
 	private VehicleList vehicleList ;
@@ -106,7 +107,9 @@ public class ManagerClass {
         	System.exit(1);
         } catch (CarPlateNumberInvalid e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println("Invalid Car Plate number");
+//			System.exit(1);
 		}
         finally {
         	try{
@@ -117,7 +120,7 @@ public class ManagerClass {
         	}
         }
         
-        System.out.println(vehicleList.listDetails()) ;
+//        System.out.println(vehicleList.listDetails()) ;
         
 	}
 	
@@ -132,7 +135,16 @@ public class ManagerClass {
 		
 		// Passing reference of vehicleList to GUIClass constructor
 		GUIClass gui = new GUIClass(manager.getVehicleList()) ;
+
+		System.out.println(manager.getVehicleList().ListVehicleDetails());
+		System.out.println();
+		System.out.println(manager.getVehicleList().ListVehiclesBySegment());
+	
+		System.out.println();
+		System.out.println(manager.getVehicleList().ListVehiclesByStatus());
 		
+		System.out.println();
+		System.out.println(manager.getVehicleList().ListVehiclesByType());
 	}
 
 }

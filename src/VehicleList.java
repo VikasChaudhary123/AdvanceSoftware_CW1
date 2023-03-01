@@ -3,11 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class VehicleList {
 		
 		//vehicles ArrayList
-		private ArrayList<Vehicle> vehicles;
+		private List<Vehicle> vehicles;
 		private Phase[] phases ;
 		
 		public VehicleList()
@@ -63,6 +65,15 @@ public class VehicleList {
 		public void AddNewVehicle(Vehicle vehicle) {
 			vehicles.add(vehicle);
 			vehicle.setPhase(GetPhase(vehicle));
+		}
+		
+		public void AddNewVehicle(String segment, String plateId, String type, String crossingTime, String direction, 
+	    		String length, String emission, String crossingStatus) 
+	    		throws NumberFormatException, CarPlateNumberInvalid {
+			Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, 
+					direction, length, emission, crossingStatus) ;
+			vehicle.setPhase(GetPhase(vehicle));
+			vehicles.add(vehicle);
 		}
 		
 		//Get phase by segment and direction
@@ -129,6 +140,30 @@ public class VehicleList {
 	            i++;
 	        } 
 	        return arr ;
+	    }
+	    
+	    public String ListVehicleDetails() {
+	    	StringBuffer allEntries = new StringBuffer();
+	        for(Vehicle v : vehicles) {
+	            allEntries.append(v);
+	            allEntries.append('\n');
+	        }
+	        return allEntries.toString();
+	    }
+	    
+	    public String ListVehiclesBySegment() {
+	    	Collections.sort(vehicles);
+	    	return ListVehicleDetails() ;
+	    }
+	    
+	    public String ListVehiclesByStatus() {
+	    	Collections.sort(vehicles, new VehicleStatusComparator());
+	    	return ListVehicleDetails() ;
+	    }
+	    
+	    public String ListVehiclesByType() {
+	    	Collections.sort(vehicles, new VehicleTypeComparator());
+	    	return ListVehicleDetails() ;
 	    }
 	    
 	    public String[][] listPhases(){
