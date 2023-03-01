@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ManagerClass {
 
-	private VehicleList vehicleList ;
+	public VehicleList vehicleList ;
 	private Phase[] phases ;
 	
 	
@@ -120,8 +120,7 @@ public class ManagerClass {
         	}
         }
         
-//        System.out.println(vehicleList.listDetails()) ;
-        
+   
 	}
 	
 	public VehicleList getVehicleList() {
@@ -132,6 +131,7 @@ public class ManagerClass {
 		// TODO Auto-generated method stub
 		
 		ManagerClass manager = new ManagerClass() ;
+		manager.vehicleList.SegmentSummary();
 		
 		// Passing reference of vehicleList to GUIClass constructor
 		GUIClass gui = new GUIClass(manager.getVehicleList()) ;

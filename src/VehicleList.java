@@ -117,7 +117,7 @@ public class VehicleList {
 		}
 		
 	    //return All the vehicle details 
-	    public String[][] listDetails()
+	    public String listDetails()
 	    {
 //	    	StringBuffer allEntries = new StringBuffer();
 //	        for(Vehicle v : vehicles) {
@@ -186,7 +186,68 @@ public class VehicleList {
 	    	{
 	    		totalEmissions += vehicle.getEmission();
 	    	}
-	    	return totalEmissions;
+	    	return totalEmissions/1000; //Get totalEmissions in KG
 	    }
 
+	    //Get SegmentSummary Method
+	    public Map<String, Object>  SegmentSummary() 
+	    {  
+	        int[] counts = new int[4];
+	        int[] lengths = new int[4];
+	        int[] crossingTimes = new int[4];
+	        
+	        for (Vehicle v : vehicles) {
+	            if (v.getStatus() == Vehicle.Status.WAITING) {
+	                String segment = v.getSegment();
+	                int length = v.getLength();
+	                int crossingTime = v.getCrossingTime();
+	                
+	                switch (segment) {
+	                    case "S1":
+	                        counts[0]++;
+	                        lengths[0] += length; 
+	                        crossingTimes[0] += crossingTime;
+	                        break;
+	                    case "S2":
+	                        counts[1]++;
+	                        lengths[1] += length;
+	                        crossingTimes[1] += crossingTime;
+	                        break;
+	                    case "S3":
+	                        counts[2]++;
+	                        lengths[2] += length; 
+	                        crossingTimes[2] += crossingTime;
+	                        break;
+	                    case "S4":
+	                        counts[3]++;
+	                        lengths[3] += length; 
+	                        crossingTimes[3] += crossingTime;
+	                        break;
+	                }
+	            }
+	        }
+	        double[] avgTimes = new double[4];
+	        for (int i = 0; i < 4; i++) {
+	            avgTimes[i] = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
+	        }
+	        
+	        // create a new HashMap to hold the key-value pairs
+	        Map<String, Object> dataMap = new HashMap<>();
+	        
+	        // add the key-value pairs to the map
+	        String[] segments = {"S1", "S2", "S3", "S4"};
+	        
+	        for (int i = 0; i < 4; i++) {
+	            double avgTime = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
+	            String keyPrefix = segments[i] + " ";
+	            dataMap.put(keyPrefix + "Number of Waiting Vehicle", counts[i]);
+	            dataMap.put(keyPrefix + "Length of Waiting Vehicle", lengths[i]);
+	            dataMap.put(keyPrefix + "Avg Crossing Time", avgTime);
+	           
+	        }
+	        return dataMap;
+	    }
+	     public ArrayList<Vehicle> getVehicleList() {return vehicles;}
+	     public Phase[] getPhaseList() {return phases;}
+	   
 }
