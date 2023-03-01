@@ -131,7 +131,7 @@ public class ManagerClass {
 		// TODO Auto-generated method stub
 		
 		ManagerClass manager = new ManagerClass() ;
-		manager.vehicleList.SegmentSummary();
+		
 		
 		// Passing reference of vehicleList to GUIClass constructor
 		GUIClass gui = new GUIClass(manager.getVehicleList()) ;

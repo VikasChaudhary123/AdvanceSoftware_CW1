@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.*;
 
 public class VehicleList {
 		
@@ -117,7 +119,7 @@ public class VehicleList {
 		}
 		
 	    //return All the vehicle details 
-	    public String listDetails()
+	    public String[][] listDetails()
 	    {
 //	    	StringBuffer allEntries = new StringBuffer();
 //	        for(Vehicle v : vehicles) {
@@ -235,11 +237,12 @@ public class VehicleList {
 	        Map<String, Object> dataMap = new HashMap<>();
 	        
 	        // add the key-value pairs to the map
-	        String[] segments = {"S1", "S2", "S3", "S4"};
+//	        String[] segments = {"S1", "S2", "S3", "S4"};
 	        
 	        for (int i = 0; i < 4; i++) {
 	            double avgTime = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
-	            String keyPrefix = segments[i] + " ";
+//	            String keyPrefix = segments[i] + " ";
+	            String keyPrefix = "S"+ Integer.toString(i+1)+ " ";
 	            dataMap.put(keyPrefix + "Number of Waiting Vehicle", counts[i]);
 	            dataMap.put(keyPrefix + "Length of Waiting Vehicle", lengths[i]);
 	            dataMap.put(keyPrefix + "Avg Crossing Time", avgTime);
@@ -247,7 +250,7 @@ public class VehicleList {
 	        }
 	        return dataMap;
 	    }
-	     public ArrayList<Vehicle> getVehicleList() {return vehicles;}
+	     public List<Vehicle> getVehicleList() {return vehicles;}
 	     public Phase[] getPhaseList() {return phases;}
 	   
 }
