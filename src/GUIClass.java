@@ -144,9 +144,12 @@ public void actionPerformed(ActionEvent e) {
 				 
 				 
 			} catch (CarPlateNumberInvalid e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null,e1.getMessage());
 			}
+			catch (IllegalArgumentException e1) {
+				JOptionPane.showMessageDialog(null,e1.getMessage());
+			}
+			
 	    	  
 
 	      }
