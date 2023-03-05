@@ -172,6 +172,11 @@ public class Vehicle implements Comparable<Vehicle>{
     public void setPhase(Phase p) {
     	phase = p ; 
     }
+    
+    public Phase getPhase() {
+    	return phase ;
+    }
+    
     public String getSegment() {
         return segment;
     }
