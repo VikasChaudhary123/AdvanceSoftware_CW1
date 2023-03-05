@@ -134,7 +134,7 @@ public class ManagerClass {
 		
 		
 		// Passing reference of vehicleList to GUIClass constructor
-		//GUIClass gui = new GUIClass(manager.getVehicleList()) ;
+		GUIClass gui = new GUIClass(manager.getVehicleList()) ;
 
 		System.out.println(manager.getVehicleList().ListVehicleDetails());
 		System.out.println();

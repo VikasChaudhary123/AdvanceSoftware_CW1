@@ -1,14 +1,12 @@
 import java.io.BufferedReader;
-
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import java.util.*;
 
 public class VehicleList {
@@ -185,7 +183,6 @@ public class VehicleList {
 	    
 	    //Get totalEmissions Method
 	    public float StatsCo2() {
-	      //  double expectedEmissions = 0;
 	    	float totalEmission = 0;
 	    	
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
@@ -212,6 +209,56 @@ public class VehicleList {
 	    	    System.out.println("total Emissions in Kg: "+ totalEmission/1000);
 	    	    return totalEmission ;
 	    }
+	    
+	    //Generate Phase wise report
+	    public void PhaseSummary(String filename) {
+	    	
+	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
+	    	Map<Integer, Float> phaseEmissionMap = new HashMap<>();
+	    	
+	    	for (int i = 1; i <= 8; i++) {
+	            phaseVehicleMap.put(i, new ArrayList<Vehicle>());
+	            phaseEmissionMap.put(i, 0f);
+	        }
+	        
+	        for (Vehicle v : vehicles) {
+	            if (v.getStatus() == Vehicle.Status.CROSSED) {
+	                int currentPhase = v.getPhase().getPhaseNumber();
+	                phaseVehicleMap.get(currentPhase).add(v);
+	                
+	                float currentEmission = phaseEmissionMap.get(currentPhase);
+	                currentEmission += (v.getEmission() * v.getCrossingTime() / 60f);
+	                phaseEmissionMap.put(currentPhase, currentEmission);
+	            }
+	        }
+	        
+	        // write report to file
+	        try (PrintWriter writer = new PrintWriter(new File(filename))) {
+	        	for (Map.Entry<Integer, List<Vehicle>> entry : phaseVehicleMap.entrySet()) {
+		            int phaseNum = entry.getKey();
+		            List<Vehicle> vList = entry.getValue();
+		            
+		            float totalWaitingTime = 0;
+		            int totalVehiclesCrossed = vList.size();
+		            
+		            for (int i = 0; i < totalVehiclesCrossed; i++) {
+		                Vehicle vh = vList.get(i);
+		                int crossingTime = vh.getCrossingTime();
+		                totalWaitingTime += crossingTime;
+		            }
+		            
+		            float avgWaitingTime = totalVehiclesCrossed > 0 ? totalWaitingTime / totalVehiclesCrossed : 0;
+		            float totalEmissions = phaseEmissionMap.get(phaseNum);
+		            String formattedEmissions = String.format("%.2f", totalEmissions);
+		            
+		            //System.out.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
+		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
+		        }
+	        } catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	    }
+	    
 	    //Get SegmentSummary Method
 	    public Map<String,Object> SegmentSummary() 
 	    {  
@@ -274,7 +321,7 @@ public class VehicleList {
 	        }
 	        return dataMap;
 	    }
-	     public List<Vehicle> getVehicleList() {return vehicles;}
-	     public Phase[] getPhaseList() {return phases;}
-	   
+
+    	public List<Vehicle> getVehicleList() {return vehicles;}
+    	public Phase[] getPhaseList() {return phases;}
 }
