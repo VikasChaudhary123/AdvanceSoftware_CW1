@@ -64,7 +64,7 @@ public GUIClass(ManagerClass manager) {
     panel.add(new JLabel("CO2 Emissions"));   
     CarbonEmissions= new JTextField(15);
     CarbonEmissions.setEditable(false);
-//    CarbonEmissions.setText(String.valueOf(manager.GetCo2Stats()) + " KG");
+    CarbonEmissions.setText(String.valueOf(manager.GetCo2Stats()) + " KG");
     panel.add(CarbonEmissions);
     add(panel,BorderLayout.SOUTH);
     //setting other frame attributes
@@ -125,9 +125,8 @@ public void actionPerformed(ActionEvent e) {
                         addvehicleTable.getValueAt(0,6).toString(), 
                         addvehicleTable.getValueAt(0,7).toString()
                 } ;
-//              v = new Vehicle(vehicleData);
-//              vehicleList.AddNewVehicle(v);
-//                manager.CreateVehicle(vehicleData);
+            
+                manager.CreateVehicle(vehicleData);
           }
           if(e.getSource()==cancelbutton) {
               System.out.println("Cancel button clicked");
