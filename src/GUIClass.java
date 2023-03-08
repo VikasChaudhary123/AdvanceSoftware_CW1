@@ -24,6 +24,7 @@ public GUIClass(VehicleList vehicleList) {
 	vehicleTable = table.vehicleModel();	
 	vehicleTable.setBounds(30,40,80,80); 
 	vehicleTable.getTableHeader().setReorderingAllowed(false);
+	vehicleTable.setEnabled(false);
 	JScrollPane sp=new JScrollPane(vehicleTable);   
 	add(sp,BorderLayout.NORTH);
 	
@@ -40,6 +41,7 @@ public GUIClass(VehicleList vehicleList) {
     segmentsummaryTable= new JTable(segmentsummarymodel);
     segmentsummaryTable.setBounds(30,40,80,80); 
     segmentsummaryTable.getTableHeader().setReorderingAllowed(false);
+    segmentsummaryTable.setEnabled(false);
     JScrollPane scrollSegment=new JScrollPane(segmentsummaryTable);   
     add(scrollSegment,BorderLayout.EAST);
     
@@ -48,6 +50,7 @@ public GUIClass(VehicleList vehicleList) {
     phaseTable= new JTable(phasemodel);
     phaseTable.setBounds(60,80,40,40); 
     phaseTable.getTableHeader().setReorderingAllowed(false);
+    phaseTable.setEnabled(false);
     JScrollPane scrollPhase=new JScrollPane(phaseTable);   
 	add(scrollPhase,BorderLayout.WEST);
 	
@@ -82,6 +85,13 @@ public GUIClass(VehicleList vehicleList) {
 	pack();
 	setVisible(true);
 	setExtendedState(MAXIMIZED_BOTH);
+	addWindowListener(new WindowAdapter(){
+
+        @Override
+        public void windowClosing(WindowEvent et) {
+        	vehicleList.PhaseSummary("PhaseSummary.txt");
+        }
+   });
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
 
@@ -92,19 +102,8 @@ public void actionPerformed(ActionEvent e) {
 	
 	      if(e.getSource()==exitbutton)
 	      {
-			System.out.println("Exit button has been clicked");
-			File file = new File("PhaseSummary.txt");
-			FileWriter fw;
-			try {
-				fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write("Phase Summary");
-				bw.close();
-			} 
-			catch (IOException e1) {
-				
-				e1.printStackTrace();
-			}
+			vehicleList.PhaseSummary("PhaseSummary.txt");
+			System.exit(0);
 	      }
 	      if(e.getSource()==addbutton) {
 	    	  System.out.println("Add button clicked");
@@ -150,6 +149,7 @@ public void actionPerformed(ActionEvent e) {
 			catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null,e1.getMessage(),"Number Format Exception",
 				        JOptionPane.INFORMATION_MESSAGE);
+				
 			}
 			catch (IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(null,e1.getMessage(),"Illegal Argument Exception",

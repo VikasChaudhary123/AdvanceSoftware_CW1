@@ -165,31 +165,6 @@ public class VehicleList {
 		}
 		
 	    //return All the vehicle details 
-	    public String[][] listDetails()
-	    {
-//	    	StringBuffer allEntries = new StringBuffer();
-//	        for(Vehicle v : vehicles) {
-//	            allEntries.append(v);
-//	            allEntries.append('\n');
-//	        }
-//	        return allEntries.toString();
-	        
-	        String[][] arr = new String[vehicles.size()][8];
-	        int i = 0;
-	        for (Vehicle v : vehicles) {
-	            arr[i][0] = v.getSegment();
-	            arr[i][1] = v.getPlateId();
-	            arr[i][2] = v.getType();
-	            arr[i][3] = Integer.toString(v.getCrossingTime());
-	            arr[i][4] = v.getDirection().toString();
-	            arr[i][5] = Integer.toString(v.getLength());
-	            arr[i][6] = Integer.toString(v.getEmission());
-	            arr[i][7] = v.getStatus().toString();
-	            i++;
-	        } 
-	        return arr ;
-	    }
-	    
 	    public String ListVehicleDetails() {
 	    	StringBuffer allEntries = new StringBuffer();
 	        for(Vehicle v : vehicles) {
