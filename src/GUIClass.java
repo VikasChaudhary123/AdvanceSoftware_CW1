@@ -85,6 +85,13 @@ public GUIClass(VehicleList vehicleList) {
 	pack();
 	setVisible(true);
 	setExtendedState(MAXIMIZED_BOTH);
+	addWindowListener(new WindowAdapter(){
+
+        @Override
+        public void windowClosing(WindowEvent et) {
+        	vehicleList.PhaseSummary("PhaseSummary.txt");
+        }
+   });
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
 
@@ -96,6 +103,7 @@ public void actionPerformed(ActionEvent e) {
 	      if(e.getSource()==exitbutton)
 	      {
 			vehicleList.PhaseSummary("PhaseSummary.txt");
+			System.exit(0);
 	      }
 	      if(e.getSource()==addbutton) {
 	    	  System.out.println("Add button clicked");
