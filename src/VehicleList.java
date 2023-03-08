@@ -13,23 +13,25 @@ public class VehicleList {
 		
 		//vehicles ArrayList
 		private List<Vehicle> vehicles;
-		private Phase[] phases ;
+		private Phase[] phases = new Phase[8];
 		
-		public VehicleList()
+		public VehicleList() throws IOException, CarPlateNumberInvalid
 		{
 			vehicles = new ArrayList<Vehicle>() ;
-			// To store phases, there are 8 phases in total
-			phases = new Phase[8] ;
+			ReadPhaseDataFile();
+			ReadVehiclesDataFile();
+		}
 		
-	        BufferedReader buff = null;
+		private void ReadPhaseDataFile() throws FileNotFoundException{
 			String phaseData [] = new String[2];
-	        try {
-	        	int rowNumber = 0 ;
-	        	buff = new BufferedReader(new FileReader("intersection.csv"));
+			int rowNumber = 0 ;
+			
+				BufferedReader buff = new BufferedReader(new FileReader("intersection.csv"));
+				try {
 		    	String inputLine = buff.readLine();  //read first line
 		    	while(inputLine != null){  
 		    		if (rowNumber != 0)
-		    		{
+		    		{ 
 			    		//split line into parts
 			    		phaseData  = inputLine.split(",");
 			    		String phaseNumber = phaseData[0].trim() ;
@@ -45,16 +47,59 @@ public class VehicleList {
 		            inputLine = buff.readLine();
 		            
 		        }
+			}
+			catch(IOException e){
+				e.printStackTrace();
+	            System.exit(1);      
+			}
+			finally {
+	        	try{
+	        		buff.close();
+	        	}
+	        	catch (IOException ioe) {
+	        		//don't do anything
+	        	}
 	        }
-	        catch(FileNotFoundException e) {
-	        	System.out.println(e.getMessage());
-	            System.exit(1);
-	        }
-	        catch (IOException e) {
-	        	e.printStackTrace();
-	            System.exit(1);        	
-	        }
-	        finally {
+		}
+		
+		private void ReadVehiclesDataFile() throws FileNotFoundException, CarPlateNumberInvalid{
+	        // to store vehicle data - segment, plateNumber, crossingTime etc. 
+	    	String data [] = new String[8];
+	    	int rowNumber = 0 ;
+	    	BufferedReader buff = new BufferedReader(new FileReader("vehicle.csv"));
+	    	try {
+	    		String inputLine = buff.readLine();  //read first line
+		    	while(inputLine != null){  
+		    		if (rowNumber != 0)
+		    		{
+			    		//split line into parts
+			    		data  = inputLine.split(",");
+			    		// read vehicle info from data array
+			    		String segment = data[0].trim(); 
+			    		String plateNumber = data[1].trim() ;
+			    		String vehicleType = data[2].trim() ;
+			    		String crossingTime = data[3].trim() ;
+			    		String direction = data[4].trim() ;
+			    		String length = data[5].trim() ;
+			    		String emission = data[6].trim() ;
+			    		String crossingStatus = data[7].trim() ;
+			    		
+			    		//create vehicle object
+			    		Vehicle v = new Vehicle(segment, plateNumber, vehicleType, crossingTime, direction, 
+			    				length, emission, crossingStatus) ;
+			    		AddNewVehicle(v);
+		    		}
+		    		rowNumber++ ;
+		            //read next line
+		            inputLine = buff.readLine();
+		            
+		        }
+	    	}
+	    	catch(IOException e){
+				e.printStackTrace();
+	            System.exit(1);      
+			}
+			finally {
 	        	try{
 	        		buff.close();
 	        	}
