@@ -16,7 +16,7 @@ public class ManagerClass {
 			// Initialise empty list of vehicles
 			vehicleList = new VehicleList() ;
 			// Passing reference of vehicleList to GUIClass constructor
-			guiClass = new GUIClass(vehicleList) ;
+			guiClass = new GUIClass(this) ;
 		}
 		catch(FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
@@ -36,12 +36,27 @@ public class ManagerClass {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
-		catch (IllegalArgumentException e) {
+		catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.exit(1);
 		}
 		
+	}
+	
+	public void CreateVehicle(String[] vdata)
+	{
+		try {
+			vehicleList.AddNewVehicle(vdata);
+			guiClass.VehicleAddSuccess();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			guiClass.ShowErrorToUser(e);
+		}
+	}
+	
+	public float GetCo2Stats() {
+		return vehicleList.StatsCo2() ;
 	}
 	
 	public VehicleList getVehicleList() {

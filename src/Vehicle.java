@@ -48,7 +48,7 @@ public class Vehicle implements Comparable<Vehicle>{
    
     public Vehicle(String segment, String plateId, String type, String crossingTime, String direction, 
     		String length, String emission, String crossingStatus) 
-    				throws CarPlateNumberInvalid, NumberFormatException {
+    				throws CarPlateNumberInvalid, NumberFormatException, InvalidInputException {
     	
     	String seg = segment.trim().toUpperCase() ;
     	if (seg.length()==2 && seg.charAt(0)=='S')
@@ -61,7 +61,7 @@ public class Vehicle implements Comparable<Vehicle>{
     			this.segment = seg ;
     		}
     		else {
-    			throw new IllegalArgumentException("Segment can only be S1, S2, S3, S4, S5, S6, S7 or S8") ;    		
+    			throw new InvalidInputException("Segment can only be S1, S2, S3, S4, S5, S6, S7 or S8") ;    		
         	}
     		
     	}
@@ -69,21 +69,20 @@ public class Vehicle implements Comparable<Vehicle>{
     		throw new IllegalArgumentException("Segment can only be S1, S2, S3, S4, S5, S6, S7 or S8") ;
     	}
     	
-    	// https://www.javatpoint.com/java-regex
-    	// https://gist.github.com/danielrbradley/7567269
-    	String pattern = "(^[A-Z]{2}[0-9]{2}\\s?[A-Z]{3}$)|(^[A-Z][0-9]{1,3}[A-Z]{3}$)|(^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(^[0-9]{1,4}[A-Z]{1,2}$)|(^[0-9]{1,3}[A-Z]{1,3}$)|(^[A-Z]{1,2}[0-9]{1,4}$)|(^[A-Z]{1,3}[0-9]{1,3}$)|(^[A-Z]{1,3}[0-9]{1,4}$)|(^[0-9]{3}[DX]{1}[0-9]{3}$)\r\n"
-    			+ "" ;
-    	Pattern p = Pattern.compile(pattern) ;
-    	Matcher m = p.matcher(plateId.trim().toUpperCase());  
-    	if (m.matches())
-    	{
-    		this.plateId = plateId.trim().toUpperCase();
-    	}else {
+    	
+    	if (IsCarPlateNumberValid(plateId)) {
+    		this.plateId = plateId ;
+    	}
+    	else {
     		throw new CarPlateNumberInvalid("Car plate number is not valid") ;
     	}
     	
-    	
-        this.type = type.trim().toUpperCase();
+        type = type.trim().toUpperCase();
+        if (type.equals("CAR") || type.equals("TRUCK") || type.equals("BUS")){
+        	this.type = type ;
+        }else {
+        	throw new InvalidInputException("Truck, Bus and Car are only types allowed") ;
+        }
         
         //https://www.freecodecamp.org/news/java-string-to-int-how-to-convert-a-string-to-an-integer/#:~:text=Use%20Integer.parseInt()%20to%20Convert%20a%20String%20to%20an%20Integer&text=If%20the%20string%20does%20not,inside%20the%20try%2Dcatch%20block.
         if(!IsNumeric(crossingTime.trim())) {
@@ -103,7 +102,7 @@ public class Vehicle implements Comparable<Vehicle>{
         VehicleDirection d = VehicleDirection.directionLookup(direction.trim().toUpperCase()); 
         if (d == null)
         {
-        	throw new IllegalArgumentException("Vehicle direction can only be left, right or straight") ;
+        	throw new InvalidInputException("Vehicle direction can only be left, right or straight") ;
         }
         else {
         	this.direction = d ;
@@ -112,7 +111,7 @@ public class Vehicle implements Comparable<Vehicle>{
         Status s = Status.StatusLookup(crossingStatus.trim().toUpperCase()) ;
         if (s == null)
         {
-        	throw new IllegalArgumentException("Crossing Status can only be crossed, waiting");
+        	throw new InvalidInputException("Crossing Status can only be crossed, waiting");
         }
         this.crossingStatus = s; 
     }
@@ -124,6 +123,21 @@ public class Vehicle implements Comparable<Vehicle>{
     		return false ;
     	}
     	return true ;
+    }
+    
+    private boolean IsCarPlateNumberValid(String plateNumber) {
+    	// https://www.javatpoint.com/java-regex
+    	// https://gist.github.com/danielrbradley/7567269
+    	String pattern = "(^[A-Z]{2}[0-9]{2}\\s?[A-Z]{3}$)|(^[A-Z][0-9]{1,3}[A-Z]{3}$)|(^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(^[0-9]{1,4}[A-Z]{1,2}$)|(^[0-9]{1,3}[A-Z]{1,3}$)|(^[A-Z]{1,2}[0-9]{1,4}$)|(^[A-Z]{1,3}[0-9]{1,3}$)|(^[A-Z]{1,3}[0-9]{1,4}$)|(^[0-9]{3}[DX]{1}[0-9]{3}$)\r\n"
+    			+ "" ;
+    	Pattern p = Pattern.compile(pattern) ;
+    	Matcher m = p.matcher(plateNumber.trim().toUpperCase());  
+    	if (m.matches())
+    	{
+    		return true ;
+    	}else {
+    		return false ;
+    	}
     }
     
     /**
@@ -149,7 +163,7 @@ public class Vehicle implements Comparable<Vehicle>{
     {
         if(other instanceof Vehicle) {
             Vehicle otherVehicle = (Vehicle) other;
-            return segment.equals(otherVehicle.getSegment());
+            return plateId.equals(otherVehicle.plateId);
         }
         else {
             return false;

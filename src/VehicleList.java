@@ -15,7 +15,7 @@ public class VehicleList {
 		private List<Vehicle> vehicles;
 		private Phase[] phases = new Phase[8];
 		
-		public VehicleList() throws IOException, CarPlateNumberInvalid
+		public VehicleList() throws IOException, CarPlateNumberInvalid, InvalidInputException
 		{
 			vehicles = new ArrayList<Vehicle>() ;
 			ReadPhaseDataFile();
@@ -62,7 +62,7 @@ public class VehicleList {
 	        }
 		}
 		
-		private void ReadVehiclesDataFile() throws FileNotFoundException, CarPlateNumberInvalid{
+		private void ReadVehiclesDataFile() throws FileNotFoundException, CarPlateNumberInvalid, InvalidInputException{
 	        // to store vehicle data - segment, plateNumber, crossingTime etc. 
 	    	String data [] = new String[8];
 	    	int rowNumber = 0 ;
@@ -115,13 +115,37 @@ public class VehicleList {
 			vehicle.setPhase(GetPhase(vehicle));
 		}
 		
-		public void AddNewVehicle(String segment, String plateId, String type, String crossingTime, String direction, 
-	    		String length, String emission, String crossingStatus) 
-	    		throws NumberFormatException, CarPlateNumberInvalid {
-			Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, 
-					direction, length, emission, crossingStatus) ;
-			vehicle.setPhase(GetPhase(vehicle));
-			vehicles.add(vehicle);
+		public void AddNewVehicle(String[] vehicleParameters ) 
+	    		throws NumberFormatException, CarPlateNumberInvalid, InvalidInputException {
+			String segment = vehicleParameters[0] ;
+			String plateId = vehicleParameters[1];
+			String type = vehicleParameters[2];
+			String crossingTime = vehicleParameters[3];
+			String direction = vehicleParameters[4] ; 
+    		String length = vehicleParameters[5];
+    		String emission = vehicleParameters[6] ;
+    		String crossingStatus = vehicleParameters[7] ;
+    		
+    		if (!IsDuplicateVehicle(plateId)){
+    			Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, 
+    					direction, length, emission, crossingStatus) ;
+    			vehicle.setPhase(GetPhase(vehicle));
+    			vehicles.add(vehicle);
+    		}
+    		else {
+    			throw new CarPlateNumberInvalid("Vehicle with same PlateNumber exists") ;
+    		}
+    		
+			
+		}
+		
+		private boolean IsDuplicateVehicle(String plateId) {
+			for (Vehicle v : vehicles) {
+				if (v.getPlateId().equals(plateId)) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		//Get phase by segment and direction
