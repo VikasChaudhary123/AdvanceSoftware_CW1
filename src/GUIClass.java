@@ -18,7 +18,7 @@ public class GUIClass extends JFrame implements ActionListener{
 public GUIClass(ManagerClass manager) {
 //  this.vehicleList=vehicleList;
     this.manager = manager ;
-    TrafficGUIDataModel table = new TrafficGUIDataModel(manager.vehicleList);
+    TrafficGUIDataModel table = new TrafficGUIDataModel(manager);
     // table to display vehicle data with option to sort rows by either segment, status or type of vehicle
     vehicleTable = table.vehicleModel();    
     vehicleTable.setBounds(30,40,80,80); 
@@ -103,7 +103,7 @@ public void VehicleAddSuccess()
      for(int i = 0; i < 8; i++) {
          addvehicleTable.setValueAt("", 0, i);
       }
-     TrafficGUIDataModel tablekey = new TrafficGUIDataModel(manager.vehicleList);
+     TrafficGUIDataModel tablekey = new TrafficGUIDataModel(manager);
      TableModel updatesegmentsmodel = tablekey.segmentSummaryModel();
      segmentsummaryTable.setModel(updatesegmentsmodel);
 }
