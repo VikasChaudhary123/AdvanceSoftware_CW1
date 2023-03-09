@@ -20,7 +20,7 @@ public class TrafficGUIDataModel {
 	        new Object[] { "Segment", "Vehicle","Type","Crossing Time","Direction","Length","Emission","Status" }, 0
 	    );
 	    
-	    for(Vehicle v : manager.vehicleList.getVehicleList()) {
+	    for(Vehicle v : manager.retrieveVehicleList()) {
            
             model.addRow(new Object[] { v.getSegment(), v.getPlateId(),v.getType(),v.getCrossingTime(),v.getDirection(),v.getLength(),v.getEmission(),v.getStatus() });
         
@@ -64,7 +64,7 @@ public class TrafficGUIDataModel {
 	        new Object[] { "Phase", "Duration"}, 0
 	    );
 	   
-	    for(Phase v : manager.vehicleList.getPhaseList()) {
+	    for(Phase v : manager.getPhaseList()) {
           
            model.addRow(new Object[] {v.getPhaseNumber(),v.getPhaseDuration() });
        
@@ -76,7 +76,7 @@ public class TrafficGUIDataModel {
 	        new Object[] {"Segment","Vehicles waiting" ,"Waiting Length" ,"Cross time"}, 0
 	    );
 	     String[] segments = {"S1", "S2", "S3", "S4"};
-	     Map<String,Object> segmentMap= manager.GetSegmentSummary();
+	     Map<String,Object> segmentMap= manager.getSegmentSummary();
 	     for(int i = 0; i < 4; i++)
 	     {
 	    	 model.addRow(new Object[] {segments[i],
