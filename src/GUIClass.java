@@ -26,6 +26,7 @@ public GUIClass(ManagerClass manager) {
     vehicleTable.setEnabled(false);
     JScrollPane sp=new JScrollPane(vehicleTable);   
     add(sp,BorderLayout.NORTH);
+    
     // table to get a row of vehicle data from user
     TableModel addvehiclemodel = table.addvehicleModel();
     addvehicleTable= new JTable(addvehiclemodel);
@@ -44,11 +45,11 @@ public GUIClass(ManagerClass manager) {
     // table to display phase details
     TableModel phasemodel = table.phaseModel();
     phaseTable= new JTable(phasemodel);
-    phaseTable.setBounds(60,80,40,40); 
     phaseTable.getTableHeader().setReorderingAllowed(false);
     phaseTable.setEnabled(false);
     JScrollPane scrollPhase=new JScrollPane(phaseTable);   
     add(scrollPhase,BorderLayout.WEST);
+    scrollPhase.setPreferredSize(new Dimension(200, 20));
     // add, exit and cancel buttons along with carbon emission textfields
     panel= new JPanel();
     panel.setBounds(700,20,100,100);
@@ -81,13 +82,15 @@ public GUIClass(ManagerClass manager) {
    });
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
-public void ShowErrorToUser(Exception ex) {
+public void showErrorToUser(Exception ex) {
     JOptionPane.showMessageDialog(null,ex.getMessage(), "Exception",
             JOptionPane.INFORMATION_MESSAGE);
 }
-public void VehicleAddSuccess()
+public void vehicleAddSuccess()
 {
-    System.out.println("Vehicle has been added successfully");
+   
+	  JOptionPane.showMessageDialog(null,"Vehicle has been added successfully", "Status Message",
+            JOptionPane.INFORMATION_MESSAGE);
      DefaultTableModel model = (DefaultTableModel) vehicleTable.getModel();
       model.addRow(new Object[]{
               addvehicleTable.getValueAt(0,0),

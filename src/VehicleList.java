@@ -18,11 +18,11 @@ public class VehicleList {
 		public VehicleList() throws IOException, CarPlateNumberInvalid, InvalidInputException
 		{
 			vehicles = new ArrayList<Vehicle>() ;
-			ReadPhaseDataFile();
-			ReadVehiclesDataFile();
+			readPhaseDataFile();
+			readVehiclesDataFile();
 		}
 		
-		private void ReadPhaseDataFile() throws FileNotFoundException{
+		private void readPhaseDataFile() throws FileNotFoundException{
 			String phaseData [] = new String[2];
 			int rowNumber = 0 ;
 			
@@ -62,7 +62,7 @@ public class VehicleList {
 	        }
 		}
 		
-		private void ReadVehiclesDataFile() throws FileNotFoundException, CarPlateNumberInvalid, InvalidInputException{
+		private void readVehiclesDataFile() throws FileNotFoundException, CarPlateNumberInvalid, InvalidInputException{
 	        // to store vehicle data - segment, plateNumber, crossingTime etc. 
 	    	String data [] = new String[8];
 	    	int rowNumber = 0 ;
@@ -87,7 +87,7 @@ public class VehicleList {
 			    		//create vehicle object
 			    		Vehicle v = new Vehicle(segment, plateNumber, vehicleType, crossingTime, direction, 
 			    				length, emission, crossingStatus) ;
-			    		AddNewVehicle(v);
+			    		addNewVehicle(v);
 		    		}
 		    		rowNumber++ ;
 		            //read next line
@@ -110,12 +110,12 @@ public class VehicleList {
 		}
 		
 	    //Add new Vehicle Method
-		public void AddNewVehicle(Vehicle vehicle) {
+		public void addNewVehicle(Vehicle vehicle) {
 			vehicles.add(vehicle);
-			vehicle.setPhase(GetPhase(vehicle));
+			vehicle.setPhase(setPhase(vehicle));
 		}
 		
-		public void AddNewVehicle(String[] vehicleParameters ) 
+		public void addNewVehicle(String[] vehicleParameters ) 
 	    		throws NumberFormatException, CarPlateNumberInvalid, InvalidInputException {
 			String segment = vehicleParameters[0] ;
 			String plateId = vehicleParameters[1];
@@ -126,10 +126,10 @@ public class VehicleList {
     		String emission = vehicleParameters[6] ;
     		String crossingStatus = vehicleParameters[7] ;
     		
-    		if (!IsDuplicateVehicle(plateId)){
+    		if (!isDuplicateVehicle(plateId)){
     			Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, 
     					direction, length, emission, crossingStatus) ;
-    			vehicle.setPhase(GetPhase(vehicle));
+    			vehicle.setPhase(setPhase(vehicle));
     			vehicles.add(vehicle);
     		}
     		else {
@@ -139,7 +139,7 @@ public class VehicleList {
 			
 		}
 		
-		private boolean IsDuplicateVehicle(String plateId) {
+		private boolean isDuplicateVehicle(String plateId) {
 			for (Vehicle v : vehicles) {
 				if (v.getPlateId().equals(plateId)) {
 					return true;
@@ -149,7 +149,7 @@ public class VehicleList {
 		}
 		
 		//Get phase by segment and direction
-		private Phase GetPhase(Vehicle vehicle) {
+		private Phase setPhase(Vehicle vehicle) {
 			Phase p = null ;
 			switch (vehicle.getSegment()){
 			case "S1":
@@ -189,7 +189,7 @@ public class VehicleList {
 		}
 		
 	    //return All the vehicle details 
-	    public String ListVehicleDetails() {
+	    public String listVehicleDetails() {
 	    	StringBuffer allEntries = new StringBuffer();
 	        for(Vehicle v : vehicles) {
 	            allEntries.append(v);
@@ -198,35 +198,24 @@ public class VehicleList {
 	        return allEntries.toString();
 	    }
 	    
-	    public String ListVehiclesBySegment() {
+	    public String listVehiclesBySegment() {
 	    	Collections.sort(vehicles);
-	    	return ListVehicleDetails() ;
+	    	return listVehicleDetails() ;
 	    }
 	    
-	    public String ListVehiclesByStatus() {
+	    public String listVehiclesByStatus() {
 	    	Collections.sort(vehicles, new VehicleStatusComparator());
-	    	return ListVehicleDetails() ;
+	    	return listVehicleDetails() ;
 	    }
 	    
-	    public String ListVehiclesByType() {
+	    public String listVehiclesByType() {
 	    	Collections.sort(vehicles, new VehicleTypeComparator());
-	    	return ListVehicleDetails() ;
+	    	return listVehicleDetails() ;
 	    }
 	    
-	    public String[][] listPhases(){
-	    	String[][] arr = new String[phases.length][8];
-	    	for(int i=0; i<8; i++)
-	    	{
-	    		Phase p = phases[i] ;
-	    		arr[i][0] = Integer.toString(p.getPhaseNumber()) ;
-	    		arr[i][1] = Integer.toString(p.getPhaseDuration()) ;
-
-	    	}
-	    	return arr ;
-	    }
 	    
 	    //Get totalEmissions Method
-	    public float StatsCo2() {
+	    public float statsCo2() {
 	    	float totalEmission = 0;
 	    	
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
@@ -255,7 +244,7 @@ public class VehicleList {
 	    }
 	    
 	    //Generate Phase wise report
-	    public void PhaseSummary(String filename) {
+	    public void phaseSummary(String filename) {
 	    	
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
 	    	Map<Integer, Float> phaseEmissionMap = new HashMap<>();
@@ -304,7 +293,7 @@ public class VehicleList {
 	    }
 	    
 	    //Get SegmentSummary Method
-	    public Map<String,Object> SegmentSummary() 
+	    public Map<String,Object> segmentSummary() 
 	    {  
 	        int[] counts = new int[4];
 	        int[] lengths = new int[4];
