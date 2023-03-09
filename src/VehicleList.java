@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 import java.util.*;
 
 public class VehicleList {
@@ -206,15 +208,17 @@ public class VehicleList {
 	    			  totalEmission += Emissions * waitingTime/60;
 	    		  }  
 	    	   }
-	    	    System.out.println("total Emissions in Kg: "+ totalEmission/1000);
+	    	    //System.out.println("total Emissions in Kg: "+ totalEmission/1000);
 	    	    return totalEmission ;
 	    }
 	    
 	    //Generate Phase wise report
+	    @Test
 	    public void PhaseSummary(String filename) {
 	    	
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
 	    	Map<Integer, Float> phaseEmissionMap = new HashMap<>();
+	    	float totalEmissions = 0f;
 	    	
 	    	for (int i = 1; i <= 8; i++) {
 	            phaseVehicleMap.put(i, new ArrayList<Vehicle>());
@@ -232,7 +236,7 @@ public class VehicleList {
 	            }
 	        }
 	        
-	        // write report to file
+	        //write report to file
 	        try (PrintWriter writer = new PrintWriter(new File(filename))) {
 	        	for (Map.Entry<Integer, List<Vehicle>> entry : phaseVehicleMap.entrySet()) {
 		            int phaseNum = entry.getKey();
@@ -248,12 +252,16 @@ public class VehicleList {
 		            }
 		            
 		            float avgWaitingTime = totalVehiclesCrossed > 0 ? totalWaitingTime / totalVehiclesCrossed : 0;
-		            float totalEmissions = phaseEmissionMap.get(phaseNum);
-		            String formattedEmissions = String.format("%.2f", totalEmissions);
+		            float phaseEmissions = phaseEmissionMap.get(phaseNum);
+		            totalEmissions += phaseEmissions;
 		            
+		            String formattedEmissions = String.format("%.2f", phaseEmissions);
 		            //System.out.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
 		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
 		        }
+	        	//test total emissions
+	            Assert.assertTrue("Total emissions should be less than or equal to StatsCo2", totalEmissions <= StatsCo2());
+	            
 	        } catch (IOException e) {
 	        	e.printStackTrace();
 	        }
