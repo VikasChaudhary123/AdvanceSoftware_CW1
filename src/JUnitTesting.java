@@ -51,7 +51,6 @@ import org.junit.Assert;
 	        // instance of a vehicle
 	        Vehicle vehicle = new Vehicle("S1", "AB1234", "CAR", "10", "LEFT", "2", "50", "CROSSED");
 	
-	        // getters returning the exact values or not
 	        Assertions.assertEquals("S1", vehicle.getSegment());
 	        Assertions.assertEquals("AB1234", vehicle.getPlateId());
 	        Assertions.assertEquals("CAR", vehicle.getType());
