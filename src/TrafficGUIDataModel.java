@@ -76,7 +76,7 @@ public class TrafficGUIDataModel {
 	        new Object[] {"Segment","Vehicles waiting" ,"Waiting Length" ,"Cross time"}, 0
 	    );
 	     String[] segments = {"S1", "S2", "S3", "S4"};
-	     Map<String,Object> segmentMap= manager.vehicleList.SegmentSummary();
+	     Map<String,Object> segmentMap= manager.GetSegmentSummary();
 	     for(int i = 0; i < 4; i++)
 	     {
 	    	 model.addRow(new Object[] {segments[i],
