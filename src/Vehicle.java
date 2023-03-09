@@ -70,7 +70,7 @@ public class Vehicle implements Comparable<Vehicle>{
     	}
     	
     	
-    	if (IsCarPlateNumberValid(plateId)) {
+    	if (isCarPlateNumberValid(plateId)) {
     		this.plateId = plateId ;
     	}
     	else {
@@ -85,16 +85,16 @@ public class Vehicle implements Comparable<Vehicle>{
         }
         
         //https://www.freecodecamp.org/news/java-string-to-int-how-to-convert-a-string-to-an-integer/#:~:text=Use%20Integer.parseInt()%20to%20Convert%20a%20String%20to%20an%20Integer&text=If%20the%20string%20does%20not,inside%20the%20try%2Dcatch%20block.
-        if(!IsNumeric(crossingTime.trim())) {
+        if(!isNumeric(crossingTime.trim())) {
         	throw new NumberFormatException("CrossingTime not a valid integer") ;
         }
         this.crossingTime = Integer.parseInt(crossingTime);
         
-        if(!IsNumeric(length.trim())) {
+        if(!isNumeric(length.trim())) {
         	throw new NumberFormatException("Length not a valid integer") ;
         }
         this.length = Integer.parseInt(length.trim());
-        if(!IsNumeric(emission.trim())) {
+        if(!isNumeric(emission.trim())) {
         	throw new NumberFormatException("Emission not a valid integer") ;
         }
         this.emission = Integer.parseInt(emission.trim());
@@ -116,7 +116,7 @@ public class Vehicle implements Comparable<Vehicle>{
         this.crossingStatus = s; 
     }
     
-    private boolean IsNumeric(String str)
+    private boolean isNumeric(String str)
     {
     	if (str==null || str.isEmpty() || !str.matches("[0-9.]+"))
     	{
@@ -125,7 +125,7 @@ public class Vehicle implements Comparable<Vehicle>{
     	return true ;
     }
     
-    private boolean IsCarPlateNumberValid(String plateNumber) {
+    private boolean isCarPlateNumberValid(String plateNumber) {
     	// https://www.javatpoint.com/java-regex
     	// https://gist.github.com/danielrbradley/7567269
     	String pattern = "(^[A-Z]{2}[0-9]{2}\\s?[A-Z]{3}$)|(^[A-Z][0-9]{1,3}[A-Z]{3}$)|(^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(^[0-9]{1,4}[A-Z]{1,2}$)|(^[0-9]{1,3}[A-Z]{1,3}$)|(^[A-Z]{1,2}[0-9]{1,4}$)|(^[A-Z]{1,3}[0-9]{1,3}$)|(^[A-Z]{1,3}[0-9]{1,4}$)|(^[0-9]{3}[DX]{1}[0-9]{3}$)\r\n"

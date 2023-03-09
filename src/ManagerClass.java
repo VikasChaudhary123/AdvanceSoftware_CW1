@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 
 public class ManagerClass {
@@ -46,21 +48,29 @@ public class ManagerClass {
 	public void CreateVehicle(String[] vdata)
 	{
 		try {
-			vehicleList.AddNewVehicle(vdata);
-			guiClass.VehicleAddSuccess();
+			vehicleList.addNewVehicle(vdata);
+			guiClass.vehicleAddSuccess();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			guiClass.ShowErrorToUser(e);
+			guiClass.showErrorToUser(e);
 		}
 	}
 	
 	public float GetCo2Stats() {
-		return vehicleList.StatsCo2() ;
+		return vehicleList.statsCo2() ;
 	}
 	
-	public VehicleList getVehicleList() {
-		return vehicleList ;
+	public Map<String,Object> GetSegmentSummary(){
+		return vehicleList.segmentSummary();
+	}
+	
+	public Phase[] GetPhaseList() {
+		return vehicleList.getPhaseList() ;
+	}
+	
+	public List<Vehicle> retrieveVehicleList() {
+		return vehicleList.getVehicleList() ;
 	}
 	
 	public static void main(String[] args) {
