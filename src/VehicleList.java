@@ -293,7 +293,7 @@ public class VehicleList {
 		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
 		        }
 	        	//test total emissions
-	            Assert.assertTrue("Total emissions should be less than or equal to StatsCo2", totalEmissions <= StatsCo2());
+	            Assert.assertTrue("Total emissions should be less than or equal to StatsCo2", totalEmissions <= statsCo2());
 	            
 	        } catch (IOException e) {
 	        	e.printStackTrace();
