@@ -2,7 +2,7 @@
 import java.util.Comparator;
 
 //defines an ordering on Vehicle objects on the Status
-public class VehicleStatusComparator implements Comparator<Vehicle>{
+public class VehicleStatusComparator implements Comparator<Vehicle> {
 
 	@Override
 	public int compare(Vehicle v1, Vehicle v2) {
@@ -10,5 +10,3 @@ public class VehicleStatusComparator implements Comparator<Vehicle>{
 		return v1.getStatus().compareTo(v2.getStatus());
 	}
 }
-
-
