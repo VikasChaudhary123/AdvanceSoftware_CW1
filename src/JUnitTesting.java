@@ -1,5 +1,9 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.Assert;
 
   public class JUnitTesting {
 
@@ -68,5 +72,44 @@ import org.junit.jupiter.api.Test;
 	    public void testInvalidStatus() {
 	        Assertions.assertThrows(InvalidInputException.class, () -> new Vehicle("S1", "AB1234", "CAR", "10", "LEFT", "2", "50", "MOVING"));
 	    }
+	    
+    // test to check totalCrossedVehicleEmissions(PhaseSummary)
+	    @Test
+	    public void totalCrossedVehicleEmissions() throws InvalidInputException, IOException, CarPlateNumberInvalid {
+	    	
+	    	List<Vehicle> vehicles = new ArrayList<Vehicle>();
+	        float totalPhaseEmissions = 0f;
+	        
+	        for (Vehicle v : vehicles) {
+	            if (v.getStatus() == Vehicle.Status.CROSSED) {
+	            	totalPhaseEmissions += (v.getEmission() * v.getCrossingTime() / 60f);
+	            }
+	        }
+	        
+        	VehicleList vehicleList = new VehicleList();
+	        float statsCo2 = vehicleList.statsCo2();
+	        
+	        Assert.assertTrue("Total phase emissions should be less than or equal to StatsCo2", totalPhaseEmissions <= statsCo2);
+	    }
+	    
+	 // test to check totalWaitingVehicleEmissions(SegmentSummary)
+	    @Test
+	    public void totalWaitingVehicleEmissions() throws InvalidInputException, IOException, CarPlateNumberInvalid {
+	    	
+	    	List<Vehicle> vehicles = new ArrayList<Vehicle>();
+	        float totalSegmentEmissions = 0f;
+	        
+	        for (Vehicle v : vehicles) {
+	            if (v.getStatus() == Vehicle.Status.WAITING) {
+	            	totalSegmentEmissions += (v.getEmission() * v.getCrossingTime() / 60f);
+	            }
+	        }
+	        
+        	VehicleList vehicleList = new VehicleList();
+	        float statsCo2 = vehicleList.statsCo2();
+	        
+	        Assert.assertTrue("Total segment emissions should be less than or equal to StatsCo2", totalSegmentEmissions <= statsCo2);
+	    }
+	    
 	}
   
