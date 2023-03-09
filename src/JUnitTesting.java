@@ -2,52 +2,68 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 public class JUnitTesting {
 
+
+    //  checking that the  valid vehicle can be created successfully or not
     @Test
-    public void testOfGettingPlateId() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals("ABC123", vehicle.getPlateId());
+    public void testCreatingOfValidVehicle() {
+        // instance of a vehicle
+        Vehicle vehicle = new Vehicle("S1", "AB1234", "CAR", "10", "LEFT", "2", "50", "CROSSED");
+
+        // getters returning the exact values or not
+        Assertions.assertEquals("S1", vehicle.getSegment());
+        Assertions.assertEquals("AB1234", vehicle.getPlateId());
+        Assertions.assertEquals("CAR", vehicle.getType());
+        Assertions.assertEquals(10, vehicle.getCrossingTime());
+        Assertions.assertEquals(Vehicle.VehicleDirection.LEFT, vehicle.getDirection());
+        Assertions.assertEquals(2, vehicle.getLength());
+        Assertions.assertEquals(50, vehicle.getEmission());
+        Assertions.assertEquals(Vehicle.Status.CROSSED, vehicle.getCrossingStatus());
     }
 
+    // test to check that a Vehicle with an invalid plate number throws a CarPlateNumberInvalid exception
     @Test
-    public void testOfGettingSegment() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals("segment1", vehicle.getSegment());
+    public void testInvalidPlateNumber() {
+        Assertions.assertThrows(CarPlateNumberInvalid.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                new Vehicle("S1", "1234", "CAR", "10", "LEFT", "2", "50", "CROSSED");
+            }
+        });
     }
 
+    // test to check that a Vehicle with an invalid crossing time throws a NumberFormatException or not
     @Test
-    public void testOfGettingType() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals("car", vehicle.getType());
+    public void testInvalidCrossingTime() {
+        Assertions.assertThrows(NumberFormatException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                new Vehicle("S1", "AB1234", "CAR", "ten", "LEFT", "2", "50", "CROSSED");
+            }
+        });
     }
 
+    // test to check that a Vehicle with an invalid length throws a NumberFormatException
     @Test
-    public void testOfGettingCrossingTime() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals(10, vehicle.getCrossingTime());
+    public void testInvalidLength() {
+        Assertions.assertThrows(NumberFormatException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                new Vehicle("S1", "AB1234", "CAR", "10", "LEFT", "two", "50", "CROSSED");
+            }
+        });
     }
 
+    // test to check that a Vehicle with an invalid emission throws a NumberFormatException
     @Test
-    public void testOfGettingDirection() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals(vehicleDirection.STRAIGHT, vehicle.getDirection());
+    public void testInvalidEmission() {
+        Assertions.assertThrows(NumberFormatException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                new Vehicle("S1", "AB1234", "CAR", "10", "LEFT", "2", "fifty", "CROSSED");
+            }
+        });
     }
 
-    @Test
-    public void testOfGettingStatus() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals(crossingStatus.NOTCROSSED, vehicle.getStatus());
-    }
 
-    @Test
-    public void testOfGettingLength() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals(5, vehicle.getLength());
-    }
-
-    @Test
-    public void testOfGettingEmission() {
-        Vehicle vehicle = new Vehicle("segment1", "ABC123", "car", 10, vehicleDirection.STRAIGHT, 5, 100, crossingStatus.NOTCROSSED);
-        assertEquals(100, vehicle.getEmission());
-    }
 }
 
