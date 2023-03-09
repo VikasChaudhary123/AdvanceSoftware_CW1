@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ManagerClass {
 
-	public VehicleList vehicleList;
+	private VehicleList vehicleList;
 	private GUIClass guiClass;
 
 	/**

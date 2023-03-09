@@ -180,8 +180,8 @@ public class Vehicle implements Comparable<Vehicle> {
 	 *         if they are equal and a positive integer if this comes after the
 	 *         other.
 	 */
-	public int compareTo(Vehicle otherDetails) {
-		return segment.compareTo(otherDetails.getSegment());
+	public int compareTo(Vehicle otherVehicle) {
+		return segment.compareTo(otherVehicle.getSegment());
 	}
 
 	public void setPhase(Phase p) {
