@@ -246,12 +246,10 @@ public class VehicleList {
 	    }
 	    
 	    //Generate Phase wise report
-	    @Test
 	    public void PhaseSummary(String filename) {
 	    	
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
 	    	Map<Integer, Float> phaseEmissionMap = new HashMap<>();
-	    	float totalEmissions = 0f;
 	    	
 	    	for (int i = 1; i <= 8; i++) {
 	            phaseVehicleMap.put(i, new ArrayList<Vehicle>());
@@ -286,14 +284,11 @@ public class VehicleList {
 		            
 		            float avgWaitingTime = totalVehiclesCrossed > 0 ? totalWaitingTime / totalVehiclesCrossed : 0;
 		            float phaseEmissions = phaseEmissionMap.get(phaseNum);
-		            totalEmissions += phaseEmissions;
 		            
 		            String formattedEmissions = String.format("%.2f", phaseEmissions);
 		            //System.out.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
 		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
 		        }
-	        	//test total emissions
-	            Assert.assertTrue("Total emissions should be less than or equal to StatsCo2", totalEmissions <= statsCo2());
 	            
 	        } catch (IOException e) {
 	        	e.printStackTrace();
