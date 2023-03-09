@@ -10,17 +10,17 @@ import javax.swing.table.TableRowSorter;
 
 public class TrafficGUIDataModel {
 	DefaultTableModel model;
-	VehicleList vehicleList;
-	public TrafficGUIDataModel(VehicleList vehicles)
+	ManagerClass manager;
+	public TrafficGUIDataModel(ManagerClass manager)
 	{
-		this.vehicleList=vehicles;
+		this.manager=manager;
 	}
 	public JTable vehicleModel() {
 	     model = new DefaultTableModel(
 	        new Object[] { "Segment", "Vehicle","Type","Crossing Time","Direction","Length","Emission","Status" }, 0
 	    );
-	   
-	    for(Vehicle v : vehicleList.getVehicleList()) {
+	    
+	    for(Vehicle v : manager.vehicleList.getVehicleList()) {
            
             model.addRow(new Object[] { v.getSegment(), v.getPlateId(),v.getType(),v.getCrossingTime(),v.getDirection(),v.getLength(),v.getEmission(),v.getStatus() });
         
@@ -64,7 +64,7 @@ public class TrafficGUIDataModel {
 	        new Object[] { "Phase", "Duration"}, 0
 	    );
 	   
-	    for(Phase v : vehicleList.getPhaseList()) {
+	    for(Phase v : manager.vehicleList.getPhaseList()) {
           
            model.addRow(new Object[] {v.getPhaseNumber(),v.getPhaseDuration() });
        
@@ -76,7 +76,7 @@ public class TrafficGUIDataModel {
 	        new Object[] {"Segment","Vehicles waiting" ,"Waiting Length" ,"Cross time"}, 0
 	    );
 	     String[] segments = {"S1", "S2", "S3", "S4"};
-	     Map<String,Object> segmentMap= vehicleList.SegmentSummary();
+	     Map<String,Object> segmentMap= manager.GetSegmentSummary();
 	     for(int i = 0; i < 4; i++)
 	     {
 	    	 model.addRow(new Object[] {segments[i],

@@ -1,1 +1,8 @@
-Phase Summary
+Phase 1: 0 vehicles crossed, Average waiting time: 0.0 seconds, Total emissions: 0.00 grams of CO2
+Phase 2: 1 vehicles crossed, Average waiting time: 6.0 seconds, Total emissions: 5.70 grams of CO2
+Phase 3: 0 vehicles crossed, Average waiting time: 0.0 seconds, Total emissions: 0.00 grams of CO2
+Phase 4: 0 vehicles crossed, Average waiting time: 0.0 seconds, Total emissions: 0.00 grams of CO2
+Phase 5: 0 vehicles crossed, Average waiting time: 0.0 seconds, Total emissions: 0.00 grams of CO2
+Phase 6: 1 vehicles crossed, Average waiting time: 7.0 seconds, Total emissions: 6.65 grams of CO2
+Phase 7: 0 vehicles crossed, Average waiting time: 0.0 seconds, Total emissions: 0.00 grams of CO2
+Phase 8: 1 vehicles crossed, Average waiting time: 10.0 seconds, Total emissions: 7.50 grams of CO2
