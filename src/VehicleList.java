@@ -353,14 +353,15 @@ public class VehicleList {
 	        
 	        // create a new HashMap to hold the key-value pairs
 	        Map<String, Object> dataMap = new HashMap<>();
-	        
+	        float TotalEmissions = 0;
 	        for (int i = 0; i < 4; i++) {
+	        	TotalEmissions += TotalEmission[i];
 	            double avgTime = counts[i] > 0 ? (double) crossingTimes[i] / counts[i] : 0;
 	            String keyPrefix = "S"+ Integer.toString(i+1)+ " ";
 	            dataMap.put(keyPrefix + "Number of Waiting Vehicle", counts[i]);
 	            dataMap.put(keyPrefix + "Length of Waiting Vehicle", lengths[i]);
 	            dataMap.put(keyPrefix + "Avg Crossing Time", avgTime);
-	            dataMap.put(keyPrefix + "Total Co2 Emission of Waiting Vehicle", TotalEmission[i]);
+	            dataMap.put(keyPrefix + "Total Co2 Emission of Waiting Vehicle", TotalEmissions);
 	           
 	        }
 	        return dataMap;
