@@ -181,7 +181,7 @@ public void actionPerformed(ActionEvent e) {
              for (int i = 0 ; i < vehicleData.length; i++) {
             	 if (vehicleData[i].length()==0)
             	 {
-            		 JOptionPane.showMessageDialog(null,"Please fill in data for all fields ", "Status Message",
+            		 JOptionPane.showMessageDialog(null,"Please fill in data for all fields ", "Error",
             		            JOptionPane.INFORMATION_MESSAGE);
             		 flag=1;
             		 break;
