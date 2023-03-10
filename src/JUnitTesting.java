@@ -4,8 +4,31 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.*;
 
   public class JUnitTesting {
+	  
+	  
+	  //test the isCarPlateNumberValid() method of vehicle class with several input values
+	    @Test
+	    void testIsCarPlateNumberValid() {
+	        Vehicle vehicle = new Vehicle();
+	        
+	        // Test valid plate number
+	        boolean isValid = vehicle.isCarPlateNumberValid("AB123");
+	        assertTrue(isValid);
+	        
+	        // Test invalid plate number
+	        isValid = vehicle.isCarPlateNumberValid("12AB3A");
+	        assertFalse(isValid);
+	        
+	       
+	        // Test plate number with whitespace
+	        isValid = vehicle.isCarPlateNumberValid("ABC 1234");
+	        assertFalse(isValid);
+	    }
+	  
+	  
 
 	// test to check totalCrossedVehicleEmissions(PhaseSummary)
 	    @Test

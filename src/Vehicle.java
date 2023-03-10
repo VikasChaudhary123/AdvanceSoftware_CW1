@@ -147,7 +147,7 @@ public class Vehicle implements Comparable<Vehicle> {
 	 * @param plateNumber to be checked if it is a valid number plate
 	 * @return true if valid, false if not a valid number plate
 	 */
-	private boolean isCarPlateNumberValid(String plateNumber) {
+	 boolean isCarPlateNumberValid(String plateNumber) {
 		// https://www.javatpoint.com/java-regex
 		// https://gist.github.com/danielrbradley/7567269
 		String pattern = "(^[A-Z]{2}[0-9]{2}\\s?[A-Z]{3}$)|(^[A-Z][0-9]{1,3}[A-Z]{3}$)|(^[A-Z]{3}[0-9]{1,3}[A-Z]$)|(^[0-9]{1,4}[A-Z]{1,2}$)|(^[0-9]{1,3}[A-Z]{1,3}$)|(^[A-Z]{1,2}[0-9]{1,4}$)|(^[A-Z]{1,3}[0-9]{1,3}$)|(^[A-Z]{1,3}[0-9]{1,4}$)|(^[0-9]{3}[DX]{1}[0-9]{3}$)\r\n"
@@ -184,6 +184,11 @@ public class Vehicle implements Comparable<Vehicle> {
 		} else {
 			return false;
 		}
+	}
+	
+
+	public Vehicle() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
