@@ -290,7 +290,7 @@ public class VehicleList {
 	        
 	        //write report to file
 	        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
-	        	String header = String.format("%-7s%-24s%-28s%s", "Phases", "Total Crossed Vehicles", "Average Waiting Time(s)", "Total Emissions(grams of CO2)");
+	        	String header = String.format("%-7s%-24s%-28s%s", "Phases", "TotalCrossedVehicles", "AverageWaitingTime(s)", "TotalEmissions(grams of CO2)");
 	            writer.println(header);
 	        	for (Map.Entry<Integer, List<Vehicle>> entry : phaseVehicleMap.entrySet()) {
 		            int phaseNum = entry.getKey();

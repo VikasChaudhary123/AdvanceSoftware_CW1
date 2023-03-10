@@ -121,7 +121,7 @@ public void vehicleAddStatus(String result,Exception e) {
  */
 private void showErrorToUser(Exception ex) {
 	
-    JOptionPane.showMessageDialog(null,ex.getMessage(), ex.getClass().toString().replace("class", ""),
+    JOptionPane.showMessageDialog(null,ex.getMessage(), "Error",
             JOptionPane.INFORMATION_MESSAGE);
 }
 
@@ -133,7 +133,7 @@ private void showErrorToUser(Exception ex) {
 private void vehicleAddSuccess()
 {
    
-	  JOptionPane.showMessageDialog(null,"Vehicle has been added successfully", "Status Message",
+	  JOptionPane.showMessageDialog(null,"Vehicle has been added successfully", "Success",
             JOptionPane.INFORMATION_MESSAGE);
      DefaultTableModel model = (DefaultTableModel) vehicleTable.getModel();
       model.addRow(new Object[]{

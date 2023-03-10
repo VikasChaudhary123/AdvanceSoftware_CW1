@@ -110,29 +110,55 @@ public class Vehicle implements Comparable<Vehicle> {
 
 		// https://www.freecodecamp.org/news/java-string-to-int-how-to-convert-a-string-to-an-integer/#:~:text=Use%20Integer.parseInt()%20to%20Convert%20a%20String%20to%20an%20Integer&text=If%20the%20string%20does%20not,inside%20the%20try%2Dcatch%20block.
 		if (!isNumeric(crossingTime.trim())) {
-			throw new NumberFormatException("CrossingTime not a valid integer");
+			throw new NumberFormatException("CrossingTime must be between 0 to 900");
 		}
-		this.crossingTime = Integer.parseInt(crossingTime);
+		else {
+			int crossTime = Integer.parseInt(crossingTime.trim()) ;
+			// crossTime should be betwwen 0 to 15 minutes(900seconds)
+			if (crossTime>=0 && crossTime<=900) {
+				this.crossingTime = crossTime;
+			}else {
+				throw new NumberFormatException("CrossingTime must be between 0 to 900");
+			}
+			
+		}
+		
 
 		if (!isNumeric(length.trim())) {
-			throw new NumberFormatException("Length not a valid integer");
+			throw new NumberFormatException("Length must be between 3 to 50");
+		}else {
+			int l = Integer.parseInt(length.trim()) ;
+			// We assumed that Vehicle length can be in between 3 to 30 meters only
+			if (l>=3 && l<=50) {
+				this.length = l;
+			}else {
+				throw new NumberFormatException("Length must be between 3 to 50");
+			}
+			
 		}
-		this.length = Integer.parseInt(length.trim());
+		
 		if (!isNumeric(emission.trim())) {
-			throw new NumberFormatException("Emission not a valid integer");
+			throw new NumberFormatException("Emission must be between 0 to 50");
+		}else {
+			int em = Integer.parseInt(emission.trim()) ;
+			if (em>=0 && em<=50) {
+				this.emission = em;
+			}else {
+				throw new NumberFormatException("Emission must be between 0 to 50");
+			}
 		}
-		this.emission = Integer.parseInt(emission.trim());
+		
 
-		VehicleDirection d = VehicleDirection.directionLookup(direction);
+		VehicleDirection d = VehicleDirection.directionLookup(direction.trim());
 		if (d == null) {
 			throw new InvalidInputException("Vehicle direction can only be left, right or straight");
 		} else {
 			this.direction = d;
 		}
 
-		Status s = Status.StatusLookup(crossingStatus);
+		Status s = Status.StatusLookup(crossingStatus.trim());
 		if (s == null) {
-			throw new InvalidInputException("Crossing Status can only be crossed, waiting");
+			throw new InvalidInputException("Crossing Status can only be crossed or waiting");
 		}
 		this.crossingStatus = s;
 	}

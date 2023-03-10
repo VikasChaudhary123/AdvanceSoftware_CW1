@@ -1,11 +1,7 @@
 Segment,PlateNumber,Type,CrossingTime in sec,Direction,Length in meters,Emission,CrossingStatus
 S1,BD51SMR,Car,20,left,40,5,waiting
-S2,NU72REG,Truck,40,right,80,10,waiting
-S3,BD51SMR,Car,10,straight,1,45,crossed
-S4,NU72REG,Truck,4,right,2,73,waiting
-s2,BD51SMR,Car,5,left,3,43,waiting
-s2,NU72REG,Truck,6,straight,4,57,crossed
-s4,BD51SMR,Car,8,left,5,23,waiting
-s1,NU72REG,Truck,7,straight,6,57,crossed
-s1,NU72REG,Car,4,right,7,78,waiting
-s3,BD51SMR,Car,4,right,7,78,waiting
+S2,NU72REG,Truck,40,right,23,10,waiting
+S3,BD51BMR,Car,10,straight,12,45,crossed
+S4,NU72RED,Truck,4,right,28,13,waiting
+s2,BD51EMR,Car,5,left,3,43,waiting
+s2,AU72REG,Truck,6,straight,4,17,crossed
