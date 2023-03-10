@@ -102,7 +102,8 @@ public GUIClass(ManagerClass manager) {
  * is passed to this function which displays the corresponding message by means of a pop-up dialog box 
  */
 public void showErrorToUser(Exception ex) {
-    JOptionPane.showMessageDialog(null,ex.getMessage(), "Exception",
+	
+    JOptionPane.showMessageDialog(null,ex.getMessage(), ex.getClass().toString().replace("class", ""),
             JOptionPane.INFORMATION_MESSAGE);
 }
 
