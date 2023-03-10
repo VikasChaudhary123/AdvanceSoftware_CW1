@@ -84,20 +84,18 @@ public class VehicleList {
 						// split line into parts
 						data = inputLine.split(",");
 						// read vehicle info from data array
-						String segment = data[0].trim();
-						String plateNumber = data[1].trim();
-						String vehicleType = data[2].trim();
-						String crossingTime = data[3].trim();
-						String direction = data[4].trim();
-						String length = data[5].trim();
-						String emission = data[6].trim();
-						String crossingStatus = data[7].trim();
+						data[0] = data[0].trim(); // segment number
+						data[1]= data[1].trim(); // plateNumber
+						data[2] = data[2].trim(); // vehicleType
+						data[3]= data[3].trim(); // crossingTime
+						data[4] = data[4].trim(); // direction
+						data[5] = data[5].trim(); // length
+						data[6] = data[6].trim(); // emissions
+						data[7] = data[7].trim(); // crossingStatus
 
 						// create vehicle object
-						if (!isDuplicateVehicle(plateNumber)) {
-						Vehicle v = new Vehicle(segment, plateNumber, vehicleType, crossingTime, direction, length,
-								emission, crossingStatus);
-						addNewVehicle(v);
+						if (!isDuplicateVehicle(data[1])) {
+						addNewVehicle(data) ;
 						}
 						
 					}
@@ -118,15 +116,7 @@ public class VehicleList {
 			}
 		}
 
-		// Add new Vehicle Method, when new vechicles are added from vehicle.csv
-		public void addNewVehicle(Vehicle vehicle)  {
-			vehicles.add(vehicle);
-			vehicle.setPhase(calculatePhase(vehicle));
-		}
-
-		/**
-		 * Method overloading - Vehicle parameters can be array of string as well.
-		 * 
+		/**	
 		 * @param vehicleParameters - GUIClass will pass these to manager, to create Vehicle based on user input
 		 * @throws NumberFormatException - if crossingTime, length or emission can't be
 		 *                               parsed to valid integer values
