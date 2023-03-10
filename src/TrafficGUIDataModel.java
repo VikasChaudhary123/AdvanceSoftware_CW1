@@ -7,25 +7,41 @@ import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+/**
+ * This code gets executed after the GUIClass passes its instance to the TrafficGUIDataModel constructor, which
+ * populates the tables with the vehicle data and relays the table back to GUIClass to be displayed. This is a 
+ * custom table model made to fit the vehicle data by means of the DefaultTableModel.
+ */
 public class TrafficGUIDataModel {
 	DefaultTableModel model;
 	ManagerClass manager;
+	/**
+	 * Constructor creates an instance of TrafficGUIDataModel  which retrieves the instance of ManagerClass.
+	 */
 	public TrafficGUIDataModel(ManagerClass manager)
 	{
 		this.manager=manager;
 	}
+	
+	/**
+	 *  creates a Table populated with vehicle data from the CSV file and implemented sorting only for segment,
+	 *  status and type.
+	 */
 	public JTable vehicleModel() {
+		
+		//set columns
 	     model = new DefaultTableModel(
 	        new Object[] { "Segment", "Vehicle","Type","Crossing Time","Direction","Length","Emission","Status" }, 0
 	    );
-	    
+	   
+	    //iterate over each vehicle object and add it as a new row to the table
 	    for(Vehicle v : manager.retrieveVehicleList()) {
            
             model.addRow(new Object[] { v.getSegment(), v.getPlateId(),v.getType(),v.getCrossingTime(),v.getDirection(),v.getLength(),v.getEmission(),v.getStatus() });
         
         }
 	    JTable table = new JTable(model);
+	    
 	  //Sorting vehicle data by segment, status or type
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
 		table.setRowSorter(sorter);
@@ -38,6 +54,7 @@ public class TrafficGUIDataModel {
 		sortKeys.add(new RowSorter.SortKey(statusIndex, SortOrder.ASCENDING));
 		sorter.setSortKeys(sortKeys);
 		sorter.sort();
+		
 		//disable sorting for columns other than segment, status and type
 		for(int i = 0; i < 8; i++) 
 		{
@@ -48,22 +65,36 @@ public class TrafficGUIDataModel {
 	    return table;
 	}
   
+	/**
+	 *  creates a Table that receives a single row of  vehicle data from 
+	 *  the user.
+	 */
 	public TableModel addvehicleModel() {
+		
+		//set columns
 	     model = new DefaultTableModel(
 	        new Object[] { "Segment", "Vehicle","Type","Crossing Time","Direction","Length","Emission","Status" }, 0
 	    );
 	   
+	     //add an empty row to the table, which is to be filled by the user
 	    model.addRow(new Object[] {"","","","","","","","", });
        
        
 	    return model;
 	}
 	
+	/**
+	 *  creates a Table that displays each phase with the 
+	 *  corresponding duration
+	 */
 	public TableModel phaseModel() {
+		
+		//set columns
 	     model = new DefaultTableModel(
 	        new Object[] { "Phase", "Duration"}, 0
 	    );
 	   
+	    //iterate over each phase object and add it as a new row to the table
 	    for(Phase v : manager.getPhaseList()) {
           
            model.addRow(new Object[] {v.getPhaseNumber(),v.getPhaseDuration() });
@@ -71,12 +102,22 @@ public class TrafficGUIDataModel {
        }
 	    return model;
 	}
+	
+	/**
+	 *  creates a Table that displays summary statistics
+	 *  pertaining to each segment
+	 */
 	public TableModel segmentSummaryModel() {
+		
+		//set columns
 	     model = new DefaultTableModel(
 	        new Object[] {"Segment","Vehicles waiting" ,"Waiting Length" ,"Cross time"}, 0
 	    );
 	     String[] segments = {"S1", "S2", "S3", "S4"};
+	     
 	     Map<String,Object> segmentMap= manager.getSegmentSummary();
+	     
+	     //iterate over the Map returned from getSegmentSummary method and add as a new row to the table
 	     for(int i = 0; i < 4; i++)
 	     {
 	    	 model.addRow(new Object[] {segments[i],

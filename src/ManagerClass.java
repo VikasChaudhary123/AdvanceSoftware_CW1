@@ -78,6 +78,9 @@ public class ManagerClass {
 	public Map<String, Object> getSegmentSummary() {
 		return vehicleList.segmentSummary();
 	}
+	public void setPhaseSummary() {
+		vehicleList.phaseSummaryToTextFile();
+	}
 
 	public Phase[] getPhaseList() {
 		return vehicleList.getPhaseList();
