@@ -14,8 +14,8 @@ import java.text.DecimalFormat;
  * custom table model made to fit the vehicle data by means of the DefaultTableModel.
  */
 public class TrafficGUIDataModel {
-	DefaultTableModel model;
-	ManagerClass manager;
+	private DefaultTableModel model;
+	private ManagerClass manager;
 	/**
 	 * Constructor creates an instance of TrafficGUIDataModel  which retrieves the instance of ManagerClass.
 	 */
@@ -28,7 +28,30 @@ public class TrafficGUIDataModel {
 	 *  creates a Table populated with vehicle data from the CSV file and implemented sorting only for segment,
 	 *  status and type.
 	 */
-	public JTable vehicleModel() {
+    public JTable getVehicleModel() {
+    	return vehicleModel();
+    }
+    public TableModel getModel(int choice) {
+    	TableModel thisModel= new DefaultTableModel();
+    	switch(choice)
+    	{
+    	case 1:
+    		  thisModel= addvehicleModel();
+    		  return  thisModel;
+    	case 2 :
+    		 thisModel=  segmentSummaryModel();
+    		 return  thisModel;
+    	case 3 : 
+    		 thisModel=  phaseModel();
+    		 return  thisModel;
+    	default :
+    		
+    		return  thisModel;
+    	}
+		
+    	
+    }
+	private JTable vehicleModel() {
 		
 		//set columns
 	     model = new DefaultTableModel(
@@ -70,7 +93,7 @@ public class TrafficGUIDataModel {
 	 *  creates a Table that receives a single row of  vehicle data from 
 	 *  the user.
 	 */
-	public TableModel addvehicleModel() {
+	private TableModel addvehicleModel() {
 		
 		//set columns
 	     model = new DefaultTableModel(
@@ -88,7 +111,7 @@ public class TrafficGUIDataModel {
 	 *  creates a Table that displays each phase with the 
 	 *  corresponding duration
 	 */
-	public TableModel phaseModel() {
+	private TableModel phaseModel() {
 		
 		//set columns
 	     model = new DefaultTableModel(
@@ -108,7 +131,7 @@ public class TrafficGUIDataModel {
 	 *  creates a Table that displays summary statistics
 	 *  pertaining to each segment
 	 */
-	public TableModel segmentSummaryModel() {
+	private TableModel segmentSummaryModel() {
 		
 		//set columns
 	     model = new DefaultTableModel(
