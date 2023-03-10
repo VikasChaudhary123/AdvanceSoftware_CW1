@@ -119,14 +119,14 @@ public void vehicleAddSuccess()
             JOptionPane.INFORMATION_MESSAGE);
      DefaultTableModel model = (DefaultTableModel) vehicleTable.getModel();
       model.addRow(new Object[]{
-              addvehicleTable.getValueAt(0,0),
-              addvehicleTable.getValueAt(0,1), 
-              addvehicleTable.getValueAt(0,2),
+              addvehicleTable.getValueAt(0,0).toString().toUpperCase(),
+              addvehicleTable.getValueAt(0,1).toString().toUpperCase(), 
+              addvehicleTable.getValueAt(0,2).toString().toUpperCase(),
               addvehicleTable.getValueAt(0,3),
-              addvehicleTable.getValueAt(0,4),
+              addvehicleTable.getValueAt(0,4).toString().toUpperCase(),
               addvehicleTable.getValueAt(0,5),
               addvehicleTable.getValueAt(0,6), 
-              addvehicleTable.getValueAt(0,7)
+              addvehicleTable.getValueAt(0,7).toString().toUpperCase()
                 });
 //    CarbonEmissions.setText(String.valueOf(manager.GetCo2Stats()) + " KG");
      for(int i = 0; i < 8; i++) {
