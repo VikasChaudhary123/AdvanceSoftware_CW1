@@ -160,6 +160,7 @@ private void vehicleAddSuccess()
  *  
  */
 public void actionPerformed(ActionEvent e) {
+	int flag = 0;
           if(e.getSource()==exitbutton)
           {
         	manager.setPhaseSummary();
@@ -177,8 +178,19 @@ public void actionPerformed(ActionEvent e) {
                         addvehicleTable.getValueAt(0,6).toString(), 
                         addvehicleTable.getValueAt(0,7).toString()
                 } ;
-            
+             for (int i = 0 ; i < vehicleData.length; i++) {
+            	 if (vehicleData[i].length()==0)
+            	 {
+            		 JOptionPane.showMessageDialog(null,"Please fill in data for all fields ", "Status Message",
+            		            JOptionPane.INFORMATION_MESSAGE);
+            		 flag=1;
+            		 break;
+            	 }
+            	 
+             }
+             if(flag==0) {
                 manager.createVehicle(vehicleData);
+             }
           }
           if(e.getSource()==cancelbutton) {
               System.out.println("Cancel button clicked");
