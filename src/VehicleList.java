@@ -299,6 +299,8 @@ public class VehicleList {
 	        
 	        //write report to file
 	        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+	        	String header = String.format("%-7s%-24s%-28s%s", "Phases", "Total Crossed Vehicles", "Average Waiting Time(s)", "Total Emissions(grams of CO2)");
+	            writer.println(header);
 	        	for (Map.Entry<Integer, List<Vehicle>> entry : phaseVehicleMap.entrySet()) {
 		            int phaseNum = entry.getKey();
 		            List<Vehicle> vList = entry.getValue();
@@ -316,8 +318,8 @@ public class VehicleList {
 		            float phaseEmissions = phaseEmissionMap.get(phaseNum);
 		            
 		            String formattedEmissions = String.format("%.2f", phaseEmissions);
-		            //System.out.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
-		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
+		            String reportLine = String.format("%-7d%-24d%-28.2f%s", phaseNum, totalVehiclesCrossed, avgWaitingTime, formattedEmissions);
+		            writer.println(reportLine);
 		        }
 	            
 	        } catch (IOException e) {
