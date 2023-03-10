@@ -96,9 +96,12 @@ public class VehicleList {
 						String crossingStatus = data[7].trim();
 
 						// create vehicle object
+						if (!isDuplicateVehicle(plateNumber)) {
 						Vehicle v = new Vehicle(segment, plateNumber, vehicleType, crossingTime, direction, length,
 								emission, crossingStatus);
 						addNewVehicle(v);
+						}
+						
 					}
 					rowNumber++;
 					// read next line
@@ -118,9 +121,9 @@ public class VehicleList {
 		}
 
 		// Add new Vehicle Method, when new vechicles are added from vehicle.csv
-		public void addNewVehicle(Vehicle vehicle) {
+		public void addNewVehicle(Vehicle vehicle)  {
 			vehicles.add(vehicle);
-			vehicle.setPhase(CalculatePhase(vehicle));
+			vehicle.setPhase(calculatePhase(vehicle));
 		}
 
 		/**
@@ -150,7 +153,7 @@ public class VehicleList {
 			if (!isDuplicateVehicle(plateId)) {
 				Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, direction, length, emission,
 						crossingStatus);
-				vehicle.setPhase(CalculatePhase(vehicle));
+				vehicle.setPhase(calculatePhase(vehicle));
 				vehicles.add(vehicle);
 			} else {
 				throw new CarPlateNumberInvalid("Vehicle with same PlateNumber exists");
@@ -171,7 +174,7 @@ public class VehicleList {
 		}
 
 		// Calcualte phase by segment and direction of the Vehicle
-		private Phase CalculatePhase(Vehicle vehicle) {
+		private Phase calculatePhase(Vehicle vehicle) {
 			Phase p = null;
 			switch (vehicle.getSegment()) {
 			case "S1":
@@ -276,8 +279,8 @@ public class VehicleList {
 	    }
 	    
 	    //Generate Phase wise report
-	    public void PhaseSummary(String filename) {
-	    	
+	    public void phaseSummaryToTextFile() {
+	    	String fileName = "PhaseSummary.txt" ;
 	    	Map<Integer, List<Vehicle>> phaseVehicleMap = new HashMap<>();
 	    	Map<Integer, Float> phaseEmissionMap = new HashMap<>();
 	    	
@@ -298,7 +301,9 @@ public class VehicleList {
 	        }
 	        
 	        //write report to file
-	        try (PrintWriter writer = new PrintWriter(new File(filename))) {
+	        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+	        	String header = String.format("%-7s%-24s%-28s%s", "Phases", "Total Crossed Vehicles", "Average Waiting Time(s)", "Total Emissions(grams of CO2)");
+	            writer.println(header);
 	        	for (Map.Entry<Integer, List<Vehicle>> entry : phaseVehicleMap.entrySet()) {
 		            int phaseNum = entry.getKey();
 		            List<Vehicle> vList = entry.getValue();
@@ -316,8 +321,8 @@ public class VehicleList {
 		            float phaseEmissions = phaseEmissionMap.get(phaseNum);
 		            
 		            String formattedEmissions = String.format("%.2f", phaseEmissions);
-		            //System.out.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
-		            writer.println("Phase " + phaseNum + ": " + totalVehiclesCrossed + " vehicles crossed, Average waiting time: " + avgWaitingTime + " seconds, Total emissions: " + formattedEmissions + " grams of CO2");
+		            String reportLine = String.format("%-7d%-24d%-28.2f%s", phaseNum, totalVehiclesCrossed, avgWaitingTime, formattedEmissions);
+		            writer.println(reportLine);
 		        }
 	            
 	        } catch (IOException e) {

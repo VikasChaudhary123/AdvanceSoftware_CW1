@@ -64,17 +64,17 @@ public class Vehicle implements Comparable<Vehicle> {
 		if (seg.length() == 2 && seg.charAt(0) == 'S') {
 			int ascii = seg.charAt(1); // character to ascii value
 			int ascii1 = (int) '1'; // ascii value of 1
-			int ascii8 = (int) '4'; // ascii value of 4
-			if (ascii1 <= ascii && ascii <= ascii8) // ascii value should be between[1,4] as segment can be only s1, s2,
+			int ascii4 = (int) '4'; // ascii value of 4
+			if (ascii1 <= ascii && ascii <= ascii4) // ascii value should be between[1,4] as segment can be only s1, s2,
 				// s3 and s4
 			{
 				this.segment = seg;
 			} else {
-				throw new InvalidInputException("Segment can only be S1, S2, S3, S4, S5, S6, S7 or S8");
+				throw new InvalidInputException("Segment can only be S1, S2, S3 or S4");
 			}
 
 		} else {
-			throw new InvalidInputException("Segment can only be S1, S2, S3, S4, S5, S6, S7 or S8");
+			throw new InvalidInputException("Segment can only be S1, S2, S3 or S4");
 		}
 
 		if (isCarPlateNumberValid(plateId)) {
@@ -185,8 +185,8 @@ public class Vehicle implements Comparable<Vehicle> {
 	 *         if they are equal and a positive integer if this comes after the
 	 *         other.
 	 */
-	public int compareTo(Vehicle otherDetails) {
-		return segment.compareTo(otherDetails.getSegment());
+	public int compareTo(Vehicle otherVehicle) {
+		return segment.compareTo(otherVehicle.getSegment());
 	}
 
 	public void setPhase(Phase p) {

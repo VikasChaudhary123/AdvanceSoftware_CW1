@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ManagerClass {
 
-	public VehicleList vehicleList;
+	private VehicleList vehicleList;
 	private GUIClass guiClass;
 
 	/**
@@ -38,9 +38,12 @@ public class ManagerClass {
 			System.exit(1);
 		} catch (CarPlateNumberInvalid e) {
 			// TODO Auto-generated catch block
+			
+			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			System.exit(1);
+			
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,6 +80,9 @@ public class ManagerClass {
 	 */
 	public Map<String, Object> getSegmentSummary() {
 		return vehicleList.segmentSummary();
+	}
+	public void setPhaseSummary() {
+		vehicleList.phaseSummaryToTextFile();
 	}
 
 	public Phase[] getPhaseList() {

@@ -3,6 +3,11 @@ import javax.swing.table.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
+/**
+ * This code gets executed after the ManagerClass passes its instance to the GUI constructor, which
+ * populates the tables with the relevant data and displays appropriate status messages.
+ */
 public class GUIClass extends JFrame implements ActionListener{
     private JTable vehicleTable;
     private JTable phaseTable;
@@ -13,12 +18,18 @@ public class GUIClass extends JFrame implements ActionListener{
     private JButton cancelbutton;
     private JPanel panel;
     private JTextField CarbonEmissions ;
-//  private VehicleList vehicleList;
     private ManagerClass manager ;
+
+    /**
+	 * Constructor creates an instance of GUIClass which sets up the required tables and textfields
+	 * in the GUI. It populates the data by means of relaying the manager instance with the TrafficGUIDataModel. 
+	 */
 public GUIClass(ManagerClass manager) {
-//  this.vehicleList=vehicleList;
+
     this.manager = manager ;
+    
     TrafficGUIDataModel table = new TrafficGUIDataModel(manager);
+    
     // table to display vehicle data with option to sort rows by either segment, status or type of vehicle
     vehicleTable = table.vehicleModel();    
     vehicleTable.setBounds(30,40,80,80); 
@@ -34,6 +45,7 @@ public GUIClass(ManagerClass manager) {
     addvehicleTable.getTableHeader().setReorderingAllowed(false);
     JScrollPane scrollVehicle=new JScrollPane(addvehicleTable);   
     add(scrollVehicle,BorderLayout.CENTER);
+    
     // table to display segment summary
     TableModel segmentsummarymodel =table.segmentSummaryModel();
     segmentsummaryTable= new JTable(segmentsummarymodel);
@@ -42,6 +54,7 @@ public GUIClass(ManagerClass manager) {
     segmentsummaryTable.setEnabled(false);
     JScrollPane scrollSegment=new JScrollPane(segmentsummaryTable);   
     add(scrollSegment,BorderLayout.EAST);
+    
     // table to display phase details
     TableModel phasemodel = table.phaseModel();
     phaseTable= new JTable(phasemodel);
@@ -50,6 +63,7 @@ public GUIClass(ManagerClass manager) {
     JScrollPane scrollPhase=new JScrollPane(phaseTable);   
     add(scrollPhase,BorderLayout.WEST);
     scrollPhase.setPreferredSize(new Dimension(200, 20));
+    
     // add, exit and cancel buttons along with carbon emission textfields
     panel= new JPanel();
     panel.setBounds(700,20,100,100);
@@ -62,12 +76,15 @@ public GUIClass(ManagerClass manager) {
     cancelbutton = new JButton("Cancel");
     panel.add(cancelbutton);
     cancelbutton.addActionListener(this);
+    //set precision to 2 decimal places for CO2 Emissions
+    DecimalFormat df = new DecimalFormat("#.##");
     panel.add(new JLabel("CO2 Emissions"));   
     CarbonEmissions= new JTextField(15);
     CarbonEmissions.setEditable(false);
-    CarbonEmissions.setText(String.valueOf(manager.GetCo2Stats()) + " KG");
+    CarbonEmissions.setText(String.valueOf(df.format(manager.getCo2Stats())) + " KG");
     panel.add(CarbonEmissions);
     add(panel,BorderLayout.SOUTH);
+    
     //setting other frame attributes
     setTitle("Traffic Simulation");
     setSize(1000,800);
@@ -77,15 +94,27 @@ public GUIClass(ManagerClass manager) {
     addWindowListener(new WindowAdapter(){
         @Override
         public void windowClosing(WindowEvent et) {
-//          vehicleList.PhaseSummary("PhaseSummary.txt");
+          manager.setPhaseSummary();
         }
    });
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
+
+/**
+ * Based on the type of exception that arises as a result of invalid data by user or file, the exception 
+ * is passed to this function which displays the corresponding message by means of a pop-up dialog box 
+ */
 public void showErrorToUser(Exception ex) {
-    JOptionPane.showMessageDialog(null,ex.getMessage(), "Exception",
+	
+    JOptionPane.showMessageDialog(null,ex.getMessage(), ex.getClass().toString().replace("class", ""),
             JOptionPane.INFORMATION_MESSAGE);
 }
+
+/**
+ * Gets executed only if the data entered by the user is valid. It displays
+ * a status message to the user via a dialog box informing them that their data was 
+ * successfully added.
+ */
 public void vehicleAddSuccess()
 {
    
@@ -93,14 +122,14 @@ public void vehicleAddSuccess()
             JOptionPane.INFORMATION_MESSAGE);
      DefaultTableModel model = (DefaultTableModel) vehicleTable.getModel();
       model.addRow(new Object[]{
-              addvehicleTable.getValueAt(0,0),
-              addvehicleTable.getValueAt(0,1), 
-              addvehicleTable.getValueAt(0,2),
+              addvehicleTable.getValueAt(0,0).toString().toUpperCase(),
+              addvehicleTable.getValueAt(0,1).toString().toUpperCase(), 
+              addvehicleTable.getValueAt(0,2).toString().toUpperCase(),
               addvehicleTable.getValueAt(0,3),
-              addvehicleTable.getValueAt(0,4),
+              addvehicleTable.getValueAt(0,4).toString().toUpperCase(),
               addvehicleTable.getValueAt(0,5),
               addvehicleTable.getValueAt(0,6), 
-              addvehicleTable.getValueAt(0,7)
+              addvehicleTable.getValueAt(0,7).toString().toUpperCase()
                 });
 //    CarbonEmissions.setText(String.valueOf(manager.GetCo2Stats()) + " KG");
      for(int i = 0; i < 8; i++) {
@@ -110,10 +139,15 @@ public void vehicleAddSuccess()
      TableModel updatesegmentsmodel = tablekey.segmentSummaryModel();
      segmentsummaryTable.setModel(updatesegmentsmodel);
 }
+
+/**
+ * Event handler function for the add, cancel and exit buttons
+ *  
+ */
 public void actionPerformed(ActionEvent e) {
           if(e.getSource()==exitbutton)
           {
-//          vehicleList.PhaseSummary("PhaseSummary.txt");
+        	manager.setPhaseSummary();
             System.exit(0);
           }
           if(e.getSource()==addbutton) {
@@ -129,7 +163,7 @@ public void actionPerformed(ActionEvent e) {
                         addvehicleTable.getValueAt(0,7).toString()
                 } ;
             
-                manager.CreateVehicle(vehicleData);
+                manager.createVehicle(vehicleData);
           }
           if(e.getSource()==cancelbutton) {
               System.out.println("Cancel button clicked");
