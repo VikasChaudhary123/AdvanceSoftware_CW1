@@ -31,7 +31,7 @@ public GUIClass(ManagerClass manager) {
     TrafficGUIDataModel table = new TrafficGUIDataModel(manager);
     
     // table to display vehicle data with option to sort rows by either segment, status or type of vehicle
-    vehicleTable = table.vehicleModel();    
+    vehicleTable = table.getVehicleModel();    
     vehicleTable.setBounds(30,40,80,80); 
     vehicleTable.getTableHeader().setReorderingAllowed(false);
     vehicleTable.setEnabled(false);
@@ -39,7 +39,7 @@ public GUIClass(ManagerClass manager) {
     add(sp,BorderLayout.NORTH);
     
     // table to get a row of vehicle data from user
-    TableModel addvehiclemodel = table.addvehicleModel();
+    TableModel addvehiclemodel = table.getModel(1);
     addvehicleTable= new JTable(addvehiclemodel);
     addvehicleTable.setBounds(30,40,80,80); 
     addvehicleTable.getTableHeader().setReorderingAllowed(false);
@@ -47,7 +47,7 @@ public GUIClass(ManagerClass manager) {
     add(scrollVehicle,BorderLayout.CENTER);
     
     // table to display segment summary
-    TableModel segmentsummarymodel =table.segmentSummaryModel();
+    TableModel segmentsummarymodel =table.getModel(2);
     segmentsummaryTable= new JTable(segmentsummarymodel);
     segmentsummaryTable.setBounds(30,40,80,80); 
     segmentsummaryTable.getTableHeader().setReorderingAllowed(false);
@@ -56,7 +56,7 @@ public GUIClass(ManagerClass manager) {
     add(scrollSegment,BorderLayout.EAST);
     
     // table to display phase details
-    TableModel phasemodel = table.phaseModel();
+    TableModel phasemodel = table.getModel(3);
     phaseTable= new JTable(phasemodel);
     phaseTable.getTableHeader().setReorderingAllowed(false);
     phaseTable.setEnabled(false);
@@ -100,11 +100,26 @@ public GUIClass(ManagerClass manager) {
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
 
+
+public void vehicleAddStatus(String result,Exception e) {
+	
+	switch(result)
+	{
+	case "success":
+		    vehicleAddSuccess();
+		    return ;
+	case "failure" :
+		    showErrorToUser(e);
+		    return;
+		
+	}
+	
+}
 /**
  * Based on the type of exception that arises as a result of invalid data by user or file, the exception 
  * is passed to this function which displays the corresponding message by means of a pop-up dialog box 
  */
-public void showErrorToUser(Exception ex) {
+private void showErrorToUser(Exception ex) {
 	
     JOptionPane.showMessageDialog(null,ex.getMessage(), ex.getClass().toString().replace("class", ""),
             JOptionPane.INFORMATION_MESSAGE);
@@ -115,7 +130,7 @@ public void showErrorToUser(Exception ex) {
  * a status message to the user via a dialog box informing them that their data was 
  * successfully added.
  */
-public void vehicleAddSuccess()
+private void vehicleAddSuccess()
 {
    
 	  JOptionPane.showMessageDialog(null,"Vehicle has been added successfully", "Status Message",
@@ -136,7 +151,7 @@ public void vehicleAddSuccess()
          addvehicleTable.setValueAt("", 0, i);
       }
      TrafficGUIDataModel tablekey = new TrafficGUIDataModel(manager);
-     TableModel updatesegmentsmodel = tablekey.segmentSummaryModel();
+     TableModel updatesegmentsmodel = tablekey.getModel(2);
      segmentsummaryTable.setModel(updatesegmentsmodel);
 }
 

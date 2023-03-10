@@ -57,12 +57,12 @@ public class ManagerClass {
 		try {
 			vehicleList.addNewVehicle(vdata);
 			//			If Vehicle data added by user is valid, notify GUIClass to show success message to user 
-			guiClass.vehicleAddSuccess();
+			guiClass.vehicleAddStatus("success", new Exception());
 		} catch (Exception e) {
 			// All the exceptions are being caught here, to show to the user
 			e.printStackTrace();
 			//If Vehicle data added by user is invalid, notify GUIClass to show error message to user 
-			guiClass.showErrorToUser(e);
+			guiClass.vehicleAddStatus("failure",e);
 		}
 	}
 
