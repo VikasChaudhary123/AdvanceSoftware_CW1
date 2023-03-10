@@ -150,7 +150,7 @@ public class VehicleList {
 
 			// Checking if user entered a Vehicle with plateId which is already there in the
 			// list
-			if (!isDuplicateVehicle(plateId)) {
+			if (!isDuplicateVehicle(plateId.toUpperCase())) {
 				Vehicle vehicle = new Vehicle(segment, plateId, type, crossingTime, direction, length, emission,
 						crossingStatus);
 				vehicle.setPhase(calculatePhase(vehicle));
