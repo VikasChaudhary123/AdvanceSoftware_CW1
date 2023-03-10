@@ -173,7 +173,7 @@ public class VehicleList {
 			return false;
 		}
 
-		// Calcualte phase by segment and direction of the Vehicle
+		// Calcualte Phase by segment and direction of the Vehicle, to assign it to the Vehicle
 		private Phase calculatePhase(Vehicle vehicle) {
 			Phase p = null;
 			switch (vehicle.getSegment()) {
@@ -394,10 +394,16 @@ public class VehicleList {
 	        return dataMap;
 	    }
 
+	/**
+	 * @return
+	 */
 	public List<Vehicle> getVehicleList() {
 		return vehicles;
 	}
 
+	/**
+	 * @return array of phases. Each element of the array contains phaseNumber and phaseDuration. GUIClass needs this to show to user
+	 */
 	public Phase[] getPhaseList() {
 		return phases;
 	}

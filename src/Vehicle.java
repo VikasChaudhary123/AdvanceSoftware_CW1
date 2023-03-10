@@ -13,11 +13,17 @@ public class Vehicle implements Comparable<Vehicle> {
 	private int emission;
 	private Status crossingStatus;
 
+	/**
+	 * Enum for Vehicle direction. Vehicle direction can only be LEFT, RIGHT or STRAIGHT
+	 */
 	public enum VehicleDirection {
 		STRAIGHT, RIGHT, LEFT;
 
-		// string to Enum ignore case
-		// https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+		/**
+		 *To Parse String to Enum while ignoring case
+		 *@return null if string doesn't match any enum else returns the enum
+		 *https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+		*/
 		public static VehicleDirection directionLookup(String direction) {
 			for (VehicleDirection d : VehicleDirection.values()) {
 				if (d.name().equalsIgnoreCase(direction)) {
@@ -28,11 +34,18 @@ public class Vehicle implements Comparable<Vehicle> {
 		}
 	}
 
+	
+	/**
+	 * Enum for Vehicle Status, it can be CROSSED or WAITING only
+	 */
 	public enum Status {
 		CROSSED, WAITING;
 
-		// string to Enum with ignore case
-		// https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+		/**
+		 *To Parse String to Enum while ignoring case
+		 *@return null if string doesn't match any enum else returns the enum
+		 *https://stackoverflow.com/questions/28332924/case-insensitive-matching-of-a-string-to-a-java-enum
+		*/
 		public static Status StatusLookup(String status) {
 			for (Status s : Status.values()) {
 				if (s.name().equalsIgnoreCase(status)) {
@@ -184,42 +197,74 @@ public class Vehicle implements Comparable<Vehicle> {
 		return segment.compareTo(otherVehicle.getSegment());
 	}
 
+	/**
+	 * @param p is the Phase object, VehicleList will call this to set the phase
+	 */
 	public void setPhase(Phase p) {
 		phase = p;
 	}
 
+	/**
+	 * @return phase of the Vehicle object
+	 */
 	public Phase getPhase() {
 		return phase;
 	}
 
+	/**
+	 * @return the segment assigned to the Vehicle, it can only be S1, S2, S3 or S4
+	 */
 	public String getSegment() {
 		return segment;
 	}
 
+	/**
+	 * @return the plateId of the Vehicle
+	 */
 	public String getPlateId() {
 		return plateId;
 	}
 
+	
+	/**
+	 * @return the type of the Vehicle. Type can be Car, Bus or Truck
+	 */
 	public String getType() {
 		return type;
 	}
 
+	
+	/**
+	 * @return the crossingTime of the Vehicle in seconds
+	 */
 	public int getCrossingTime() {
 		return crossingTime;
 	}
 
+	/**
+	 * @return the direction of the Vehicle, it can be left, right or straight. It is an enum
+	 */
 	public VehicleDirection getDirection() {
 		return direction;
 	}
 
+	/**
+	 * @return the length of the Vehicle in meters
+	 */
 	public int getLength() {
 		return length;
 	}
 
+	/**
+	 * @return the emission of the Vehicle in grams/minutes
+	 */
 	public int getEmission() {
 		return emission;
 	}
 
+	/**
+	 * @return the crossingStatus of the Vehicle, it can be waiting or crossed. It is an enum
+	 */
 	public Status getStatus() {
 		return crossingStatus;
 	}

@@ -69,30 +69,47 @@ public class ManagerClass {
 	}
 
 	/**
-	 * Manager class gets co2 stats from VehicleList class and passes it to GUIClass
+	 * GUIClass calls this function to get C02 stats
 	 */
 	public float getCo2Stats() {
 		return vehicleList.statsCo2();
 	}
 
 	/**
-	 * Manager class gets segment summary from VehicleList class and passes it to GUIClass
+	 * ManagerClass gets segment summary from VehicleList class and passes it to GUIClass
 	 */
 	public Map<String, Object> getSegmentSummary() {
 		return vehicleList.segmentSummary();
 	}
+	
+	/**
+	 * GUIClass calls this function when user presses exit button
+	 */
 	public void setPhaseSummary() {
 		vehicleList.phaseSummaryToTextFile();
 	}
 
+	
+	/**
+	 * @return Phase array that contains 8 phases each having phaseNumber and phaseDuration
+	 * GUIClass calls this function to get details about the phases
+	 */
 	public Phase[] getPhaseList() {
 		return vehicleList.getPhaseList();
 	}
 
+	
+	/**
+	 * @return List of Vehicles, GUIClass uses this to show Vehicle details
+	 */
 	public List<Vehicle> retrieveVehicleList() {
 		return vehicleList.getVehicleList();
 	}
 
+	
+	/**
+	 * Code execution starts from here
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

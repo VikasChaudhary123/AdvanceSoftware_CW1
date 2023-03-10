@@ -1,7 +1,8 @@
 
 import java.util.Comparator;
 
-//defines an ordering on Vehicle objects on the Status
+// Defines an ordering on Vehicle objects on the Status
+// To sort Vehicles with Status
 public class VehicleStatusComparator implements Comparator<Vehicle> {
 
 	@Override
