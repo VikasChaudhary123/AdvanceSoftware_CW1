@@ -3,6 +3,7 @@ import javax.swing.table.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 /**
  * This code gets executed after the ManagerClass passes its instance to the GUI constructor, which
  * populates the tables with the relevant data and displays appropriate status messages.
@@ -75,10 +76,12 @@ public GUIClass(ManagerClass manager) {
     cancelbutton = new JButton("Cancel");
     panel.add(cancelbutton);
     cancelbutton.addActionListener(this);
+    //set precision to 2 decimal places for CO2 Emissions
+    DecimalFormat df = new DecimalFormat("#.##");
     panel.add(new JLabel("CO2 Emissions"));   
     CarbonEmissions= new JTextField(15);
     CarbonEmissions.setEditable(false);
-    CarbonEmissions.setText(String.valueOf(manager.getCo2Stats()) + " KG");
+    CarbonEmissions.setText(String.valueOf(df.format(manager.getCo2Stats())) + " KG");
     panel.add(CarbonEmissions);
     add(panel,BorderLayout.SOUTH);
     

@@ -7,6 +7,7 @@ import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.text.DecimalFormat;
 /**
  * This code gets executed after the GUIClass passes its instance to the TrafficGUIDataModel constructor, which
  * populates the tables with the vehicle data and relays the table back to GUIClass to be displayed. This is a 
@@ -116,14 +117,14 @@ public class TrafficGUIDataModel {
 	     String[] segments = {"S1", "S2", "S3", "S4"};
 	     
 	     Map<String,Object> segmentMap= manager.getSegmentSummary();
-	     
+	     DecimalFormat df = new DecimalFormat("#.##");
 	     //iterate over the Map returned from getSegmentSummary method and add as a new row to the table
 	     for(int i = 0; i < 4; i++)
 	     {
 	    	 model.addRow(new Object[] {segments[i],
 	    			 segmentMap.get(segments[i]+ " Number of Waiting Vehicle"),
 	    			 segmentMap.get(segments[i]+ " Length of Waiting Vehicle"),
-	    			 segmentMap.get(segments[i]+ " Avg Crossing Time")});
+	    			 String.valueOf(df.format(segmentMap.get(segments[i]+ " Avg Crossing Time")))});
 	     }
         
 	    return model;

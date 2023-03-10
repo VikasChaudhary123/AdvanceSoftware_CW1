@@ -96,9 +96,12 @@ public class VehicleList {
 						String crossingStatus = data[7].trim();
 
 						// create vehicle object
+						if (!isDuplicateVehicle(plateNumber)) {
 						Vehicle v = new Vehicle(segment, plateNumber, vehicleType, crossingTime, direction, length,
 								emission, crossingStatus);
 						addNewVehicle(v);
+						}
+						
 					}
 					rowNumber++;
 					// read next line
@@ -118,7 +121,7 @@ public class VehicleList {
 		}
 
 		// Add new Vehicle Method, when new vechicles are added from vehicle.csv
-		public void addNewVehicle(Vehicle vehicle) {
+		public void addNewVehicle(Vehicle vehicle)  {
 			vehicles.add(vehicle);
 			vehicle.setPhase(calculatePhase(vehicle));
 		}

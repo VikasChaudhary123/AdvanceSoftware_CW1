@@ -38,9 +38,12 @@ public class ManagerClass {
 			System.exit(1);
 		} catch (CarPlateNumberInvalid e) {
 			// TODO Auto-generated catch block
+			
+			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			System.exit(1);
+			
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
