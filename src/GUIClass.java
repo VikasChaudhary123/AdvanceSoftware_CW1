@@ -17,7 +17,7 @@ public class GUIClass extends JFrame implements ActionListener{
     private JButton addbutton;
     private JButton cancelbutton;
     private JPanel panel;
-    private JTextField CarbonEmissions ;
+    private JTextField carbonEmissions ;
     private ManagerClass manager ;
 
     /**
@@ -79,10 +79,10 @@ public GUIClass(ManagerClass manager) {
     //set precision to 2 decimal places for CO2 Emissions
     DecimalFormat df = new DecimalFormat("#.##");
     panel.add(new JLabel("CO2 Emissions"));   
-    CarbonEmissions= new JTextField(15);
-    CarbonEmissions.setEditable(false);
-    CarbonEmissions.setText(String.valueOf(df.format(manager.getCo2Stats())) + " KG");
-    panel.add(CarbonEmissions);
+    carbonEmissions= new JTextField(15);
+    carbonEmissions.setEditable(false);
+    carbonEmissions.setText(String.valueOf(df.format(manager.getCo2Stats())) + " KG");
+    panel.add(carbonEmissions);
     add(panel,BorderLayout.SOUTH);
     
     //setting other frame attributes

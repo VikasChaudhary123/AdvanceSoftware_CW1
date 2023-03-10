@@ -14,8 +14,8 @@ import java.text.DecimalFormat;
  * custom table model made to fit the vehicle data by means of the DefaultTableModel.
  */
 public class TrafficGUIDataModel {
-	DefaultTableModel model;
-	ManagerClass manager;
+	private DefaultTableModel model;
+	private ManagerClass manager;
 	/**
 	 * Constructor creates an instance of TrafficGUIDataModel  which retrieves the instance of ManagerClass.
 	 */

@@ -56,6 +56,11 @@ public class Vehicle implements Comparable<Vehicle> {
 		}
 	}
 
+	//Empty constructor
+	public Vehicle() {
+		
+	}
+	
 	/**
 	 * @param segment        - Vehicle segment, Can only be s1, s2, s3 or s4
 	 * @param plateId        - Vehicle plate number
@@ -176,6 +181,7 @@ public class Vehicle implements Comparable<Vehicle> {
 
 	/**
 	 * Two vehicle will be equal if both are Vehicle class instances and their plateId is
+	 * For future use
 	 */
 	public boolean equals(Object other) {
 		if (other instanceof Vehicle) {
@@ -186,11 +192,6 @@ public class Vehicle implements Comparable<Vehicle> {
 		}
 	}
 	
-
-	public Vehicle() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * Compare this vehicle object against another, for the purpose of sorting. Fields are compared by segment.
 	 * @param otherDetails The details to be compared against.
